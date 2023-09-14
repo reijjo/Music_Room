@@ -1,8 +1,18 @@
 :root {
+  --black: #111111;
+  --white: #f5f5f5;
   --ok: #064ddc;
   --success: #50d050;
-  --warn: #ffcb76;
+  --warn: #ffb846;
   --error: #ff4b4b;
+
+  --prima: hsl(212, 92%, 60%);
+  --seco: #ed702d;
+
+  --primamid: hsl(212, 92%, 40%);
+  --primalight: hsl(212, 92%, 80%);
+  --background: hsl(212, 92%, 90%);
+  --text: hsl(212, 92%, 20%);
 }
 
 body {
@@ -14,4 +24,55 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
+}
+
+/* BUTTONS */
+.myButton {
+  padding: 0.5rem 1rem;
+  margin: 4px;
+}
+
+.myButton:hover {
+  cursor: pointer;
+}
+
+.textButton {
+  border: none;
+  background-color: transparent;
+  border-radius: 5px;
+  color: var(--prima);
+  font-weight: 900;
+}
+
+.textButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 15px var(--primalight);
+}
+
+.filledButton {
+  border: 1px solid var(--primamid);
+  border-radius: 5px;
+  background-color: var(--primalight);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.filledButton:hover {
+  /* transform: translateY(-2px); */
+  background-color: var(--primamid);
+  color: var(--white);
+  box-shadow: 2px 2px 15px var(--primalight);
+}
+
+.outlinedButton {
+  border: 1px solid var(--primamid);
+  border-radius: 5px;
+  background-color: var(--white);
+  font-weight: 600;
+  color: var(--primamid);
+}
+
+.outlinedButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 15px var(--primalight);
 }
