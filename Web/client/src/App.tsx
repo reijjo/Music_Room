@@ -1,25 +1,13 @@
-import { useState } from "react";
-
-import testService from "./services/testService";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Homepage from "./components/HomePage";
 
 const App = () => {
-  const [test, setTest] = useState("");
-
-  const getText = async () => {
-    try {
-      const resp = await testService.testAxios();
-      setTest(resp);
-    } catch (error) {
-      console.log("WHAT THE HELL ERROR");
-    }
-  };
-
-  console.log("TEST", test);
-
   return (
-    <div>
-      <button onClick={getText}>test axios</button>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
+    </Router>
   );
 };
 
