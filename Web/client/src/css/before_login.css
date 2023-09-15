@@ -1,0 +1,71 @@
+.home-logos {
+  display: flex;
+  justify-content: center;
+}
+
+.home-welcome {
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  /* height: calc(100% - 7vh); */
+  height: auto;
+  padding-top: 10vh;
+  flex-direction: column;
+  max-width: 1000px;
+  /* border: 1px solid black; */
+  /* max-width: 100%; */
+  /* height: max-content; */
+  margin: 0 2vw;
+}
+
+.deezer-presents {
+  display: flex;
+  flex-direction: row;
+  /* padding-right: 10vw; */
+  justify-content: flex-end;
+  padding-bottom: 1vh;
+  max-width: 100%;
+  margin-right: 2vw;
+}
+
+.deezer-presents img {
+  max-height: 60px;
+  height: 8vw;
+  margin-right: 2vw;
+}
+
+.deezer-presents > div {
+  font-size: 30px;
+  align-self: flex-end;
+  margin-top: 20px;
+}
+
+.musicroom-logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
+  margin-right: 2vw;
+}
+
+.musicroom-logo img {
+  /* height: 8vw; */
+  max-height: 60px;
+  margin-right: 0.5vw;
+}
+
+.musicroom-logo > div {
+  font-size: 80px;
+  font-weight: 1000;
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(90deg, var(--prima), var(--seco), var(--prima));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.to-login {
+  border: 1px solid blue;
+  display: flex;
+}

@@ -1,49 +1,41 @@
-import { useState } from "react";
-
-import testService from "../services/testService";
-
+import deezerLogo from "../images/PNG/Colored_Full_Black@2x.png";
+import equalizer from "../images/PNG/Colored_Equalizer@2x.png";
 import MyButton from "./common/Button";
 
 const Homepage = () => {
-  const [test, setTest] = useState("");
-
-  const getText = async () => {
-    try {
-      const resp = await testService.testAxios();
-      setTest(resp);
-    } catch (error) {
-      console.log("WHAT THE HELL ERROR");
-    }
-  };
-
-  console.log("TEST", test);
-
   return (
-    <div>
-      <button onClick={getText}>test axios</button>
-      <br />
-      <MyButton className="myButton textButton" type="button">
-        text BUTTON
-      </MyButton>
-      <br />
-      <MyButton className="myButton filledButton" type="button">
-        contained BUTTON
-      </MyButton>
-      <br />
-      <MyButton className="myButton outlinedButton" type="button">
-        outlined BUTTON
-      </MyButton>
-      <h1 style={{ color: "var(--ok)" }}>OK testi</h1>
-      <h1 style={{ color: "var(--success" }}>SUCCESS testi</h1>
-      <h1 style={{ color: "var(--warn)" }}>WARN testi</h1>
-      <h1 style={{ color: "var(--error)" }}>ERROR testi</h1>
-      <h1 style={{ color: "var(--prima)" }}>PRIMARY testi</h1>
-      <h1 style={{ color: "var(--seco)" }}>SECONDARY testi</h1>
-      <h1 style={{ color: "var(--primamid)" }}>PRIMAMID testi</h1>
-      <h1 style={{ color: "var(--primalight)" }}>PRIMALIGHT testi</h1>
-      <h1 style={{ color: "var(--background)" }}>BACKGROUND testi</h1>
-      <h1 style={{ color: "var(--text)" }}>TEXT testi</h1>
-    </div>
+    <>
+      <div className="home-logos">
+        <div className="home-welcome">
+          <div className="deezer-presents">
+            <img src={deezerLogo} alt="deezer-logo" title="deezer" />
+            <div>presents:</div>
+          </div>
+          <div className="musicroom-logo">
+            <img src={equalizer} alt="musicroom-logo" title="MusicRoom" />
+            <div>Music Room</div>
+          </div>
+          <p
+            style={{
+              margin: "0",
+              textAlign: "end",
+              marginRight: "2vw",
+              fontSize: "18px",
+              color: "var(--text)",
+            }}
+          >
+            The place where you can stream music like a maniac!
+          </p>
+        </div>
+      </div>
+      <div
+        style={{ display: "flex", justifyContent: "center", paddingTop: "2vh" }}
+      >
+        <MyButton className="myButton filledButton">
+          Click here to join!
+        </MyButton>
+      </div>
+    </>
   );
 };
 
