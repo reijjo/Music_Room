@@ -1,5 +1,6 @@
 import deezerLogo from "../images/PNG/Colored_Full_Black@2x.png";
-import equalizer from "../images/PNG/Colored_Equalizer@2x.png";
+import equalizer from "../images/kassu2.png";
+import { Link } from "react-router-dom";
 import MyButton from "./common/Button";
 
 const Homepage = () => {
@@ -31,9 +32,11 @@ const Homepage = () => {
       <div
         style={{ display: "flex", justifyContent: "center", paddingTop: "2vh" }}
       >
-        <MyButton className="myButton filledButton">
-          Click here to join!
-        </MyButton>
+        <Link to="/register">
+          <MyButton className="myButton filledButton">
+            Click here to join!
+          </MyButton>
+        </Link>
       </div>
     </>
   );

@@ -31,9 +31,10 @@ body {
 
 #main {
   height: calc(100vh - 7vh);
+  background-color: var(--background);
 }
 
-/* NAVBAR */
+/* NAVBAR & FOOTER */
 nav {
   width: 100%;
   top: 0;
@@ -51,6 +52,27 @@ nav > div {
   margin: 0 1vw;
 }
 
+.nav-logo {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem 1rem;
+}
+
+.nav-logo img {
+  height: 25px;
+  margin-right: 1vw;
+}
+
+.nav-logo div {
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(90deg, var(--white), var(--white), var(--white));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
 footer {
   width: 100%;
   bottom: 0;
@@ -59,6 +81,14 @@ footer {
   min-height: 7vh;
   max-height: max-content;
   background-color: var(--prima);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--white);
+}
+
+footer > div {
+  margin: 0 1vw;
 }
 
 /* BUTTONS */
@@ -87,7 +117,7 @@ footer {
 .filledButton {
   border: 1px solid var(--primamid);
   border-radius: 5px;
-  background-color: var(--primalight);
+  background-color: var(--white);
   font-weight: 600;
   color: var(--text);
 }

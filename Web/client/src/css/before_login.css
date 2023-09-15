@@ -1,3 +1,4 @@
+/* HOMEPAGE */
 .home-logos {
   display: flex;
   justify-content: center;
@@ -68,4 +69,52 @@
 .to-login {
   border: 1px solid blue;
   display: flex;
+}
+
+/* REGISTER */
+.register-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  height: auto;
+}
+
+.got-account {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1vh;
+}
+
+.oauth-reg {
+  border: 1px solid green;
+}
+
+.oauth-logos {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.oauth-logos > div {
+  margin: 1vh 1vw;
+  padding: 1vh 2vw;
+  border: 1px solid var(--prima);
+  /* width: min(160px, 400px); */
+  min-width: 100px;
+  max-width: 120px;
+  border-radius: 15px;
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oauth-logos > div:hover {
+  cursor: pointer;
+}
+.oauth-logos img {
+  max-height: 3vh;
+  margin-right: 4px;
 }
