@@ -10,7 +10,7 @@
   justify-content: center;
   /* height: calc(100% - 7vh); */
   height: auto;
-  padding-top: 10vh;
+  padding-top: 15vh;
   flex-direction: column;
   max-width: 1000px;
   /* border: 1px solid black; */
@@ -31,12 +31,12 @@
 
 .deezer-presents img {
   max-height: 60px;
-  height: 8vw;
+  height: 5vw;
   margin-right: 2vw;
 }
 
 .deezer-presents > div {
-  font-size: 30px;
+  font-size: 20px;
   align-self: flex-end;
   margin-top: 20px;
 }
