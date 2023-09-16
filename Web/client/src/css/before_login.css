@@ -75,10 +75,14 @@
 .register-main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  /* justify-content: center; */
   align-items: center;
-  border: 1px solid red;
-  height: auto;
+  /* border: 1px solid red; */
+  padding-bottom: 50px;
+  /* min-height: 100vh; */
+  /* height: auto; */
+  /* flex-grow: 1; */
 }
 
 .got-account {
@@ -87,9 +91,9 @@
   margin-bottom: 1vh;
 }
 
-.oauth-reg {
+/* .oauth-reg {
   border: 1px solid green;
-}
+} */
 
 .oauth-logos {
   display: flex;
@@ -130,14 +134,20 @@
 
 .reg-fields label {
   margin-top: 2vh;
+  padding-left: 1vw;
 }
 
-.reg-input {
-  padding: 0.5vh 0.5vh;
+.reg-input,
+select {
+  padding: 1vh 1vh;
   border-radius: 5px;
   min-height: 25px;
   font-size: 16px;
   /* margin-bottom: 2vh; */
+}
+
+.reg-input:focus {
+  box-shadow: 5px 5px 15px var(--primalight);
 }
 
 .regmsg {
@@ -146,8 +156,14 @@
   padding: 2px;
 }
 
-.regmsg li {
+.regmsg > div {
+  display: flex;
+  flex-direction: row;
   font-size: smaller;
   font-weight: lighter;
   padding-left: 1vw;
+}
+
+.extra-button:hover {
+  background-color: var(--primamid) !important;
 }
