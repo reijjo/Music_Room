@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import Navbar from "../components/common/Navbar";
 import Homepage from "../components/HomePage";
+import Register from "../components/Register";
 
 describe("<Navbar />", () => {
   test("is it all there", () => {
@@ -68,5 +69,38 @@ describe("<Homepage />", () => {
     const link = screen.getByRole("link");
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/register");
+  });
+
+  test("header test", () => {
+    render(
+      <BrowserRouter>
+        <Homepage />
+      </BrowserRouter>
+    );
+
+    const header = screen.queryByText("Music Room");
+    expect(header).toBeInTheDocument();
+    expect(header.tagName).toBe("DIV");
+
+    const diibadaaba = screen.queryByText(/dubbiduu/);
+    expect(diibadaaba).not.toBeInTheDocument();
+  });
+});
+
+describe("<Register />", () => {
+  test("header and link", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+
+    const header = screen.queryByText(/register here/i);
+    expect(header).toBeInTheDocument();
+    expect(header.tagName).toBe("H2");
+
+    const login = screen.queryByText(/log in/i);
+    expect(login).toBeInTheDocument();
+    expect(login).toHaveAttribute("href", "/login");
   });
 });
