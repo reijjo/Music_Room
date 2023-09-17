@@ -1,4 +1,5 @@
 /* HOMEPAGE */
+
 .home-logos {
   display: flex;
   justify-content: center;
@@ -8,6 +9,7 @@
   display: flex;
   /* border: 1px solid red; */
   justify-content: center;
+  align-items: flex-end;
   /* height: calc(100% - 7vh); */
   height: auto;
   padding-top: 15vh;
@@ -23,6 +25,7 @@
   display: flex;
   flex-direction: row;
   /* padding-right: 10vw; */
+  align-items: center;
   justify-content: flex-end;
   padding-bottom: 1vh;
   max-width: 100%;
@@ -31,12 +34,13 @@
 
 .deezer-presents img {
   max-height: 60px;
+  /* min-height: 40px; */
   height: 5vw;
   margin-right: 2vw;
 }
 
 .deezer-presents > div {
-  font-size: 20px;
+  font-size: 3vh;
   align-self: flex-end;
   margin-top: 20px;
 }
@@ -72,6 +76,7 @@
 }
 
 /* REGISTER */
+
 .register-main {
   display: flex;
   flex-direction: column;

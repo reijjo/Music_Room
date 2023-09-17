@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { SyntheticEvent, useState } from "react";
-import { Gender, RegisterData } from "../utils/types";
+import { Gender, MessageInfo, RegisterData } from "../utils/types";
 import InputField from "./common/InputField";
 import MyButton from "./common/Button";
 
 import fbico from "../images/icons8-facebook.png";
 import googleico from "../images/icons8-google.png";
+import userService from "../services/userService";
+import MessageBanner from "./common/MessageBanner";
 
 const Register = () => {
   const [regData, setRegdata] = useState<RegisterData>({
@@ -15,6 +17,11 @@ const Register = () => {
     confirmPassword: "",
     age: "",
     gender: Gender.Choose,
+  });
+
+  const [messageBanner, setMessageBanner] = useState<MessageInfo>({
+    message: "",
+    className: "",
   });
 
   // const [email, setEmail] = useState("");
@@ -173,7 +180,9 @@ const Register = () => {
       console.log("Stop that shit!");
     } else {
       try {
-        console.log("NEW USER", regData);
+        const res = await userService.regUser(regData);
+        setMessageBanner(res.messageBanner);
+        console.log("regUser response", res);
       } catch (error) {
         console.log("something weird in the neighbourhood", error);
       }
@@ -388,6 +397,12 @@ const Register = () => {
               <option value={Gender.Female}>Female</option>
               <option value={Gender.Other}>Other</option>
             </select>
+
+            <MessageBanner
+              className={messageBanner.className}
+              message={messageBanner.message}
+            />
+
             <MyButton
               className="myButton filledButton extra-button"
               type="submit"

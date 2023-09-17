@@ -1,0 +1,54 @@
+@media screen and (max-width: 650px) {
+  .home-welcome {
+    align-items: center;
+  }
+
+  .deezer-presents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .deezer-presents img {
+    min-height: 16px;
+  }
+
+  .deezer-presents > div {
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .musicroom-logo {
+    display: flex;
+    justify-content: center;
+    min-height: 20px;
+  }
+
+  .musicroom-logo img {
+    height: 7vw;
+  }
+
+  .musicroom-logo > div {
+    font-size: 10vw;
+  }
+
+  p {
+    font-size: 3vw !important;
+  }
+}
+
+/* @media screen and (max-width: 350px) {
+  .musicroom-logo > div {
+    font-size: 32px;
+  }
+} */
+
+@media screen and (max-width: 350px) {
+  .musicroom-logo > div {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 8px !important;
+  }
+}

@@ -17,3 +17,8 @@ export interface RegisterData {
   age: string;
   gender: Gender;
 }
+
+export interface MessageInfo {
+  message: string;
+  className: string;
+}
