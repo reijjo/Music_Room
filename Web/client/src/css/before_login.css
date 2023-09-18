@@ -193,8 +193,10 @@ select {
   top: 60%;
   right: 15px;
   cursor: pointer;
+  margin-left: 5px;
 }
 
 .show-pw-icon img {
   height: 24px;
+  margin-left: 50px;
 }

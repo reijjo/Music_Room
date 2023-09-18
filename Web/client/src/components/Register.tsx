@@ -297,7 +297,11 @@ const Register = () => {
               )}
             </div>
             {/* PASSWORD */}
-            <div style={{ position: "relative" }}>
+            <div
+              style={{
+                position: "relative",
+              }}
+            >
               <label htmlFor="password">Password</label>
               <InputField
                 className="reg-input"
@@ -322,6 +326,7 @@ const Register = () => {
                   setPwCapitalFocus(false);
                   setPwSpecialFocus(false);
                 }}
+                maxLength={30}
               />
               <div
                 className="show-pw-icon"
@@ -375,6 +380,7 @@ const Register = () => {
                 onBlur={() => {
                   setConfirmPwFocus(false);
                 }}
+                maxLength={30}
               />
               <div
                 className="show-pw-icon"

@@ -13,6 +13,7 @@ interface Props {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  maxLength?: number;
 }
 
 const InputField = ({
@@ -28,6 +29,7 @@ const InputField = ({
   onChange,
   onFocus,
   onBlur,
+  maxLength,
 }: Props) => {
   return (
     <input
@@ -43,6 +45,7 @@ const InputField = ({
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
+      maxLength={maxLength}
     />
   );
 };
