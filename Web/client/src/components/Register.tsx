@@ -182,6 +182,9 @@ const Register = () => {
       try {
         const res = await userService.regUser(regData);
         setMessageBanner(res.messageBanner);
+        setTimeout(() => {
+          setMessageBanner({ message: "", className: "" });
+        }, 6000);
         console.log("regUser response", res);
       } catch (error) {
         console.log("something weird in the neighbourhood", error);
@@ -398,10 +401,14 @@ const Register = () => {
               <option value={Gender.Other}>Other</option>
             </select>
 
-            <MessageBanner
-              className={messageBanner.className}
-              message={messageBanner.message}
-            />
+            {messageBanner &&
+              (messageBanner.className === "infoError" ||
+                messageBanner.className === "infoOK") && (
+                <MessageBanner
+                  className={messageBanner.className}
+                  message={messageBanner.message}
+                />
+              )}
 
             <MyButton
               className="myButton filledButton extra-button"
