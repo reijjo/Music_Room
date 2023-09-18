@@ -80,14 +80,9 @@
 .register-main {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  /* justify-content: center; */
+  /* justify-content: flex-start; */
   align-items: center;
-  /* border: 1px solid red; */
   padding-bottom: 50px;
-  /* min-height: 100vh; */
-  /* height: auto; */
-  /* flex-grow: 1; */
 }
 
 .got-account {
@@ -96,9 +91,12 @@
   margin-bottom: 1vh;
 }
 
-/* .oauth-reg {
-  border: 1px solid green;
-} */
+.oauth-reg {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
 .oauth-logos {
   display: flex;
@@ -130,11 +128,28 @@
   margin-right: 4px;
 }
 
+form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .reg-fields {
   /* margin-top: 1vh; */
   display: flex;
   flex-direction: column;
   padding: 2px 0;
+  width: 100%;
+  /* max-width: 400px; */
+  margin: 0 auto;
+}
+
+.reg-fields > div {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 80vw;
+  align-self: center;
 }
 
 .reg-fields label {

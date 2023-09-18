@@ -227,180 +227,188 @@ const Register = () => {
           </div>
         </div>
         <div style={{ textAlign: "center" }}>or</div>
-        <form onSubmit={registerUser}>
+        <form onSubmit={registerUser} style={{}}>
           <div className="reg-fields">
             {/* EMAIL */}
-            <label htmlFor="email" style={{ marginTop: "0" }}>
-              Email
-            </label>
-            <InputField
-              className="reg-input"
-              type="email"
-              value={regData.email}
-              // value={email}
-              autoComplete="off"
-              required={true}
-              name="email"
-              id="email"
-              placeholder="your@email.com..."
-              onChange={handleEmail}
-              onFocus={() => {
-                setEmailValidFocus(true);
-              }}
-              onBlur={() => {
-                setEmailValidFocus(false);
-              }}
-            />
-            {emailValidFocus && emailValidMsg && (
-              <div className="regmsg">
-                <div>- {emailValidMsg}</div>
-              </div>
-            )}
-
+            <div>
+              <label htmlFor="email" style={{ marginTop: "0" }}>
+                Email
+              </label>
+              <InputField
+                className="reg-input"
+                type="email"
+                value={regData.email}
+                // value={email}
+                autoComplete="off"
+                required={true}
+                name="email"
+                id="email"
+                placeholder="your@email.com..."
+                onChange={handleEmail}
+                onFocus={() => {
+                  setEmailValidFocus(true);
+                }}
+                onBlur={() => {
+                  setEmailValidFocus(false);
+                }}
+              />
+              {emailValidFocus && emailValidMsg && (
+                <div className="regmsg">
+                  <div>- {emailValidMsg}</div>
+                </div>
+              )}
+            </div>
             {/* USERNANME */}
-            <label htmlFor="username">Username</label>
-            <InputField
-              className="reg-input"
-              type="text"
-              value={regData.username}
-              // value={username}
-              autoComplete="off"
-              required={true}
-              name="username"
-              id="username"
-              placeholder="username..."
-              onChange={handleUsername}
-              onFocus={() => {
-                setUsernameLenFocus(true);
-                setUsernameValidFocus(true);
-              }}
-              onBlur={() => {
-                setUsernameLenFocus(false);
-                setUsernameValidFocus(false);
-              }}
-            />
-            {usernameLenFocus && usernameLenMsg && (
-              <div className="regmsg">
-                <div>- {usernameLenMsg}</div>
-              </div>
-            )}
-            {usernameValidFocus && usernameValidMsg && (
-              <div className="regmsg">
-                <div>- {usernameValidMsg}</div>
-              </div>
-            )}
-
+            <div>
+              <label htmlFor="username">Username</label>
+              <InputField
+                className="reg-input"
+                type="text"
+                value={regData.username}
+                // value={username}
+                autoComplete="off"
+                required={true}
+                name="username"
+                id="username"
+                placeholder="username..."
+                onChange={handleUsername}
+                onFocus={() => {
+                  setUsernameLenFocus(true);
+                  setUsernameValidFocus(true);
+                }}
+                onBlur={() => {
+                  setUsernameLenFocus(false);
+                  setUsernameValidFocus(false);
+                }}
+              />
+              {usernameLenFocus && usernameLenMsg && (
+                <div className="regmsg">
+                  <div>- {usernameLenMsg}</div>
+                </div>
+              )}
+              {usernameValidFocus && usernameValidMsg && (
+                <div className="regmsg">
+                  <div>- {usernameValidMsg}</div>
+                </div>
+              )}
+            </div>
             {/* PASSWORD */}
-            <label htmlFor="password">Password</label>
-            <InputField
-              className="reg-input"
-              type="password"
-              placeholder="password..."
-              autoComplete="off"
-              required={true}
-              value={regData.password}
-              // value={password}
-              name="password"
-              id="password"
-              onChange={handlePasswordChange}
-              onFocus={() => {
-                setPwLenFocus(true);
-                setPwNumFocus(true);
-                setPwCapitalFocus(true);
-                setPwSpecialFocus(true);
-              }}
-              onBlur={() => {
-                setPwLenFocus(false);
-                setPwNumFocus(false);
-                setPwCapitalFocus(false);
-                setPwSpecialFocus(false);
-              }}
-            />
-            {pwLenFocus && pwLenMsg && (
-              <div className="regmsg">
-                <div>- {pwLenMsg}</div>
-              </div>
-            )}
-            {pwNumFocus && pwNumMsg && (
-              <div className="regmsg">
-                <div>- {pwNumMsg}</div>
-              </div>
-            )}
-            {pwCapitalFocus && pwCapitalMsg && (
-              <div className="regmsg">
-                <div>- {pwCapitalMsg}</div>
-              </div>
-            )}
-            {pwSpecialFocus && pwSpecialMsg && (
-              <div className="regmsg">
-                <div>- {pwSpecialMsg}</div>
-              </div>
-            )}
-
-            {/* CONFIRM PASSWORD */}
-            <label htmlFor="confPassword">Confirm Password</label>
-            <InputField
-              className="reg-input"
-              type="password"
-              placeholder="password again..."
-              autoComplete="off"
-              required={true}
-              value={regData.confirmPassword}
-              // value={confPassword}
-              name="confPassword"
-              id="confPassword"
-              onChange={handleConfPasswordChange}
-              onFocus={() => {
-                setConfirmPwFocus(true);
-              }}
-              onBlur={() => {
-                setConfirmPwFocus(false);
-              }}
-            />
-            {confirmPwFocus && confirmPwMsg && (
-              <div className="regmsg">
-                <div>- {confirmPwMsg}</div>
-              </div>
-            )}
-
-            {/* AGE */}
-            <label htmlFor="age">Age</label>
-            <InputField
-              className="reg-input"
-              type="text"
-              placeholder="age..."
-              autoComplete="off"
-              required={true}
-              value={regData.age}
-              // value={age}
-              name="age"
-              id="age"
-              onChange={handleAge}
-              onFocus={() => setAgeFocus(true)}
-              onBlur={() => setAgeFocus(false)}
-            />
-            {ageFocus && ageMsg && (
-              <div className="regmsg">
-                <div>- {ageMsg}</div>
-              </div>
-            )}
-            <label htmlFor="gender">Gender</label>
-            <select
-              id="gender"
-              name="gender"
-              required
-              style={{ padding: "1.3vh 1vh" }}
-              onChange={handleGender}
-              value={regData.gender}
-            >
-              <option value={Gender.Choose} hidden>
-                Choose one...
-              </option>
-              <option value={Gender.Male}>Male</option>
-              <option value={Gender.Female}>Female</option>
-              <option value={Gender.Other}>Other</option>
-            </select>
-
+            <div>
+              <label htmlFor="password">Password</label>
+              <InputField
+                className="reg-input"
+                type="password"
+                placeholder="password..."
+                autoComplete="off"
+                required={true}
+                value={regData.password}
+                // value={password}
+                name="password"
+                id="password"
+                onChange={handlePasswordChange}
+                onFocus={() => {
+                  setPwLenFocus(true);
+                  setPwNumFocus(true);
+                  setPwCapitalFocus(true);
+                  setPwSpecialFocus(true);
+                }}
+                onBlur={() => {
+                  setPwLenFocus(false);
+                  setPwNumFocus(false);
+                  setPwCapitalFocus(false);
+                  setPwSpecialFocus(false);
+                }}
+              />
+              {pwLenFocus && pwLenMsg && (
+                <div className="regmsg">
+                  <div>- {pwLenMsg}</div>
+                </div>
+              )}
+              {pwNumFocus && pwNumMsg && (
+                <div className="regmsg">
+                  <div>- {pwNumMsg}</div>
+                </div>
+              )}
+              {pwCapitalFocus && pwCapitalMsg && (
+                <div className="regmsg">
+                  <div>- {pwCapitalMsg}</div>
+                </div>
+              )}
+              {pwSpecialFocus && pwSpecialMsg && (
+                <div className="regmsg">
+                  <div>- {pwSpecialMsg}</div>
+                </div>
+              )}
+            </div>
+            <div>
+              {/* CONFIRM PASSWORD */}
+              <label htmlFor="confPassword">Confirm Password</label>
+              <InputField
+                className="reg-input"
+                type="password"
+                placeholder="password again..."
+                autoComplete="off"
+                required={true}
+                value={regData.confirmPassword}
+                // value={confPassword}
+                name="confPassword"
+                id="confPassword"
+                onChange={handleConfPasswordChange}
+                onFocus={() => {
+                  setConfirmPwFocus(true);
+                }}
+                onBlur={() => {
+                  setConfirmPwFocus(false);
+                }}
+              />
+              {confirmPwFocus && confirmPwMsg && (
+                <div className="regmsg">
+                  <div>- {confirmPwMsg}</div>
+                </div>
+              )}
+            </div>
+            <div>
+              {/* AGE */}
+              <label htmlFor="age">Age</label>
+              <InputField
+                className="reg-input"
+                type="text"
+                placeholder="age..."
+                autoComplete="off"
+                required={true}
+                value={regData.age}
+                // value={age}
+                name="age"
+                id="age"
+                onChange={handleAge}
+                onFocus={() => setAgeFocus(true)}
+                onBlur={() => setAgeFocus(false)}
+              />
+              {ageFocus && ageMsg && (
+                <div className="regmsg">
+                  <div>- {ageMsg}</div>
+                </div>
+              )}
+            </div>
+            {/* GENDER */}
+            <div>
+              <label htmlFor="gender">Gender</label>
+              <select
+                id="gender"
+                name="gender"
+                required
+                style={{ padding: "1.3vh 1vh" }}
+                onChange={handleGender}
+                value={regData.gender}
+              >
+                <option value={Gender.Choose} hidden>
+                  Choose one...
+                </option>
+                <option value={Gender.Male}>Male</option>
+                <option value={Gender.Female}>Female</option>
+                <option value={Gender.Other}>Other</option>
+              </select>
+            </div>
             {messageBanner &&
               (messageBanner.className === "infoError" ||
                 messageBanner.className === "infoOK") && (
@@ -419,6 +427,9 @@ const Register = () => {
                 padding: "2vh",
                 backgroundColor: "var(--prima)",
                 color: "white",
+                width: "50%",
+                maxWidth: "200px",
+                alignSelf: "center",
               }}
             >
               Register
