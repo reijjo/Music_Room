@@ -187,3 +187,14 @@ select {
 .extra-button:hover {
   background-color: var(--primamid) !important;
 }
+
+.show-pw-icon {
+  position: absolute;
+  top: 60%;
+  right: 15px;
+  cursor: pointer;
+}
+
+.show-pw-icon img {
+  height: 24px;
+}

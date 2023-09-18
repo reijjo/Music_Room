@@ -6,6 +6,9 @@ import MyButton from "./common/Button";
 
 import fbico from "../images/icons8-facebook.png";
 import googleico from "../images/icons8-google.png";
+import showico from "../images/icons8-visibility.png";
+import hideico from "../images/icons8-invisible.png";
+
 import userService from "../services/userService";
 import MessageBanner from "./common/MessageBanner";
 
@@ -18,11 +21,12 @@ const Register = () => {
     age: "",
     gender: Gender.Choose,
   });
-
   const [messageBanner, setMessageBanner] = useState<MessageInfo>({
     message: "",
     className: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordconf, setShowPasswordconf] = useState(false);
 
   // const [email, setEmail] = useState("");
   const [emailValidFocus, setEmailValidFocus] = useState(false);
@@ -293,11 +297,11 @@ const Register = () => {
               )}
             </div>
             {/* PASSWORD */}
-            <div>
+            <div style={{ position: "relative" }}>
               <label htmlFor="password">Password</label>
               <InputField
                 className="reg-input"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="password..."
                 autoComplete="off"
                 required={true}
@@ -319,33 +323,44 @@ const Register = () => {
                   setPwSpecialFocus(false);
                 }}
               />
-              {pwLenFocus && pwLenMsg && (
-                <div className="regmsg">
-                  <div>- {pwLenMsg}</div>
-                </div>
-              )}
-              {pwNumFocus && pwNumMsg && (
-                <div className="regmsg">
-                  <div>- {pwNumMsg}</div>
-                </div>
-              )}
-              {pwCapitalFocus && pwCapitalMsg && (
-                <div className="regmsg">
-                  <div>- {pwCapitalMsg}</div>
-                </div>
-              )}
-              {pwSpecialFocus && pwSpecialMsg && (
-                <div className="regmsg">
-                  <div>- {pwSpecialMsg}</div>
-                </div>
-              )}
+              <div
+                className="show-pw-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <img src={hideico} alt="show" title="hide password" />
+                ) : (
+                  <img src={showico} alt="hide" title="show password" />
+                )}
+              </div>
             </div>
-            <div>
-              {/* CONFIRM PASSWORD */}
+            {pwLenFocus && pwLenMsg && (
+              <div className="regmsg">
+                <div>- {pwLenMsg}</div>
+              </div>
+            )}
+            {pwNumFocus && pwNumMsg && (
+              <div className="regmsg">
+                <div>- {pwNumMsg}</div>
+              </div>
+            )}
+            {pwCapitalFocus && pwCapitalMsg && (
+              <div className="regmsg">
+                <div>- {pwCapitalMsg}</div>
+              </div>
+            )}
+            {pwSpecialFocus && pwSpecialMsg && (
+              <div className="regmsg">
+                <div>- {pwSpecialMsg}</div>
+              </div>
+            )}
+
+            {/* CONFIRM PASSWORD */}
+            <div style={{ position: "relative" }}>
               <label htmlFor="confPassword">Confirm Password</label>
               <InputField
                 className="reg-input"
-                type="password"
+                type={showPasswordconf ? "text" : "password"}
                 placeholder="password again..."
                 autoComplete="off"
                 required={true}
@@ -361,12 +376,22 @@ const Register = () => {
                   setConfirmPwFocus(false);
                 }}
               />
-              {confirmPwFocus && confirmPwMsg && (
-                <div className="regmsg">
-                  <div>- {confirmPwMsg}</div>
-                </div>
-              )}
+              <div
+                className="show-pw-icon"
+                onClick={() => setShowPasswordconf(!showPasswordconf)}
+              >
+                {showPasswordconf ? (
+                  <img src={hideico} alt="show" title="hide password" />
+                ) : (
+                  <img src={showico} alt="hide" title="show password" />
+                )}
+              </div>
             </div>
+            {confirmPwFocus && confirmPwMsg && (
+              <div className="regmsg">
+                <div>- {confirmPwMsg}</div>
+              </div>
+            )}
             <div>
               {/* AGE */}
               <label htmlFor="age">Age</label>
