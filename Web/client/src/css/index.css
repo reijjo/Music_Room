@@ -1,6 +1,6 @@
 :root {
   --black: #111111;
-  --white: #f5f5f5;
+  --white: #fdfdfd;
   --ok: #064ddc;
   --success: #50d050;
   --warn: #ffb846;
@@ -141,4 +141,30 @@ footer > div {
 .outlinedButton:hover {
   transform: translateY(-2px);
   box-shadow: 2px 2px 15px var(--primalight);
+}
+
+.infoError {
+  color: var(--error);
+  border: 2px solid var(--error);
+  border-radius: 8px;
+  background-color: var(--white);
+  font-size: 18px;
+  padding: 8px 16px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+}
+
+.infoOK {
+  color: var(--success);
+  border: 2px solid var(--success);
+  border-radius: 8px;
+  background-color: var(--white);
+  font-size: 18px;
+  padding: 8px 16px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
 }
