@@ -8,6 +8,7 @@ import fbico from "../images/icons8-facebook.png";
 import googleico from "../images/icons8-google.png";
 import showico from "../images/icons8-visibility.png";
 import hideico from "../images/icons8-invisible.png";
+import loadico from "../images/icons8-loading.gif";
 
 import userService from "../services/userService";
 import MessageBanner from "./common/MessageBanner";
@@ -25,6 +26,8 @@ const Register = () => {
     message: "",
     className: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordconf, setShowPasswordconf] = useState(false);
 
@@ -176,6 +179,7 @@ const Register = () => {
 
   const registerUser = async (event: SyntheticEvent) => {
     event.preventDefault();
+    setIsLoading(true);
     if (
       regData.gender !== Gender.Male &&
       regData.gender !== Gender.Female &&
@@ -186,6 +190,7 @@ const Register = () => {
       try {
         const res = await userService.regUser(regData);
         setMessageBanner(res.messageBanner);
+        setIsLoading(false);
         setTimeout(() => {
           setMessageBanner({ message: "", className: "" });
         }, 6000);
@@ -195,8 +200,6 @@ const Register = () => {
       }
     }
   };
-
-  console.log("regData", regData);
 
   return (
     <div className="register-main">
@@ -440,6 +443,19 @@ const Register = () => {
                 <option value={Gender.Other}>Other</option>
               </select>
             </div>
+            {isLoading && (
+              <img
+                src={loadico}
+                alt="loading"
+                style={{
+                  height: "24px",
+                  width: "24px",
+                  display: "flex",
+                  alignSelf: "center",
+                  paddingTop: "8px",
+                }}
+              />
+            )}
             {messageBanner &&
               (messageBanner.className === "infoError" ||
                 messageBanner.className === "infoOK") && (

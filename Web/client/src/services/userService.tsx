@@ -4,7 +4,6 @@ import { RegisterData } from "../utils/types";
 const baseUrl = "/api/users";
 
 const regUser = async (newUser: RegisterData) => {
-  console.log("AXIOS newUser", newUser);
   try {
     const response = await axios.post(`${baseUrl}`, newUser);
     return response.data;

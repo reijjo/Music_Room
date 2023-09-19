@@ -18,6 +18,19 @@ export interface RegisterData {
   gender: Gender;
 }
 
+export interface FullUserData {
+  id: number;
+  email: string;
+  username: string;
+  passwd: string;
+  age: string;
+  gender: Gender;
+  verifycode: string;
+  user_status: string;
+}
+
+export type User = Omit<FullUserData, "passwd" | "verifycode">;
+
 export interface MessageInfo {
   message: string;
   className: string;
@@ -30,4 +43,6 @@ export interface ConfigType {
   PGADMIN_DEFAULT_PASSWORD?: string;
   PGHOST?: string;
   PGPORT?: number;
+  EMAIL_USER?: string;
+  EMAIL_PASSWD?: string;
 }
