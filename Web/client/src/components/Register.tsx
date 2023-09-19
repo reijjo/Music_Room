@@ -245,7 +245,7 @@ const Register = () => {
                 className="reg-input"
                 type="email"
                 value={regData.email}
-                // value={email}
+                // value="hohii"
                 autoComplete="off"
                 required={true}
                 name="email"

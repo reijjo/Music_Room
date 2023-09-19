@@ -1,11 +1,17 @@
 import "@testing-library/jest-dom/extend-expect";
-import { render, screen } from "@testing-library/react";
-// import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
+
+import axios from "axios";
+// import MockAdapter from "axios-mock-adapter";
 
 import Navbar from "../components/common/Navbar";
 import Homepage from "../components/HomePage";
 import Register from "../components/Register";
+import userService from "../services/userService";
+
+// const axiosMock = new MockAdapter(axios);
 
 describe("<Navbar />", () => {
   test("is it all there", () => {
@@ -102,5 +108,16 @@ describe("<Register />", () => {
     const login = screen.queryByText(/log in/i);
     expect(login).toBeInTheDocument();
     expect(login).toHaveAttribute("href", "/login");
+  });
+
+  test("email and username fields error messages", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+
+    const emailInput = screen.getByLabelText(/email/i);
+    expect(emailInput).toBeInTheDocument();
   });
 });
