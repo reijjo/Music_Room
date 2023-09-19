@@ -8,6 +8,40 @@ import { pool } from "../utils/dbConnection";
 
 const usersRouter = express.Router();
 
+const sendVerifyCode = async (email: string, verifyCode: string) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "outlook",
+      auth: {
+        user: config.EMAIL_USER,
+        pass: config.EMAIL_PASSWD,
+      },
+    });
+
+    const options = {
+      from: config.EMAIL_USER,
+      to: email,
+      subject: "TADAAA! Welcome to Music Room!",
+      html: `
+			<h3>click the link</h3><br />
+			<a href="http://localhost:3000/${verifyCode}/verify"> HERE </a><br />
+			<p>Thanks.</p>`,
+    };
+
+    await transporter.sendMail(options);
+    // transporter.sendMail(options, (err, info) => {
+    //   if (err) {
+    //     console.log("MAIL ERROR", err);
+    //   } else {
+    //     console.log("Email sent", info);
+    //     return undefined;
+    //   }
+    // });
+  } catch (error) {
+    console.error("Error sending email!", error);
+  }
+};
+
 // Route to register the user
 
 usersRouter.post("/", async (req: Request, res: Response) => {
@@ -18,40 +52,6 @@ usersRouter.post("/", async (req: Request, res: Response) => {
   const pwNotif = checks.pwCheck(user.password);
   const ageNotif = checks.ageCheck(user.age);
   const genderNotif = checks.genderCheck(user.gender);
-
-  const sendVerifyCode = async (email: string, verifyCode: string) => {
-    try {
-      const transporter = nodemailer.createTransport({
-        service: "outlook",
-        auth: {
-          user: config.EMAIL_USER,
-          pass: config.EMAIL_PASSWD,
-        },
-      });
-
-      const options = {
-        from: config.EMAIL_USER,
-        to: email,
-        subject: "TADAAA! Welcome to Music Room!",
-        html: `
-				<h3>click the link</h3><br />
-				<a href="http://localhost:3000/${verifyCode}/verify"> HERE </a><br />
-				<p>Thanks.</p>`,
-      };
-
-      await transporter.sendMail(options);
-      // transporter.sendMail(options, (err, info) => {
-      //   if (err) {
-      //     console.log("MAIL ERROR", err);
-      //   } else {
-      //     console.log("Email sent", info);
-      //     return undefined;
-      //   }
-      // });
-    } catch (error) {
-      console.error("Error sending email!", error);
-    }
-  };
 
   // Run all the checks first
 
@@ -107,13 +107,6 @@ usersRouter.post("/", async (req: Request, res: Response) => {
           user.gender,
           verifyCode,
         ]);
-        // return res.send({
-        //   ok: addUserRes.rows,
-        //   messageBanner: {
-        //     message: "Check your email!",
-        //     className: "infoOK",
-        //   },
-        // });
       }
     } catch (error) {
       console.error("Error during duplicate check", error);
@@ -134,4 +127,20 @@ usersRouter.post("/", async (req: Request, res: Response) => {
   }
 });
 
+// For verifying user
+usersRouter.get("/:code/verify", async (req: Request, res: Response) => {
+  const verifycode = req.params.code;
+  try {
+    const sql = `SELECT username FROM users WHERE verifycode = $1`;
+    const response = await pool.query(sql, [verifycode]);
+    // console.log("aa", response.rows[0].username);
+    if (response.rows.length > 0) {
+      res.send(response.rows[0]);
+    } else {
+      res.send(null);
+    }
+  } catch (err) {
+    console.error("Error verifying user", err);
+  }
+});
 export { usersRouter };

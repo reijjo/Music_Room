@@ -200,3 +200,37 @@ select {
   height: 24px;
   margin-left: 50px;
 }
+
+/* VERIFY.TSX */
+
+.basic-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 90vh;
+  /* border: 2px solid red; */
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid var(--primamid); */
+  width: max-content;
+  max-width: 600px;
+  height: max-content;
+  max-height: 400px;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.verified-username {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  /* min-width: min-content; */
+  width: 70%;
+  /* padding: 0 30px; */
+}

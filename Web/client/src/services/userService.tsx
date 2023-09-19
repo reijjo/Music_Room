@@ -12,8 +12,18 @@ const regUser = async (newUser: RegisterData) => {
   }
 };
 
+const verifyUser = async (verifycode: string) => {
+  try {
+    const response = await axios.get(`${baseUrl}/${verifycode}/verify`);
+    return response.data;
+  } catch (error) {
+    console.error("Error verifying user", error);
+  }
+};
+
 const userService = {
   regUser,
+  verifyUser,
 };
 
 export default userService;
