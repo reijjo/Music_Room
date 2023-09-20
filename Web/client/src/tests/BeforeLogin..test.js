@@ -2,14 +2,15 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
+import { act } from "react-dom/test-utils";
 
-import axios from "axios";
+// import axios from "axios";
 // import MockAdapter from "axios-mock-adapter";
 
 import Navbar from "../components/common/Navbar";
 import Homepage from "../components/HomePage";
 import Register from "../components/Register";
-import userService from "../services/userService";
+// import userService from "../services/userService";
 
 // const axiosMock = new MockAdapter(axios);
 
@@ -110,14 +111,140 @@ describe("<Register />", () => {
     expect(login).toHaveAttribute("href", "/login");
   });
 
-  test("email and username fields error messages", () => {
+  test("email and username fields error messages", async () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    // email
+    const emailInput = screen.getByPlaceholderText(/email/i);
+    expect(emailInput).toBeInTheDocument();
+
+    const errorMessage = screen.queryByText(/Use a valid email, thanks./i);
+
+    act(() => {
+      emailInput.focus();
+    });
+
+    expect(errorMessage).not.toBeInTheDocument();
+
+    act(() => {
+      userEvent.type(emailInput, "a");
+    });
+
+    const errorMessage2 = screen.queryByText(/Use a valid email, thanks./i);
+    expect(errorMessage2).toBeInTheDocument();
+
+    // username
+    const userInput = screen.getByPlaceholderText(/username/i);
+    expect(userInput).toBeInTheDocument();
+
+    const errMsg = screen.queryByText(/alphanumeric/i);
+    expect(errMsg).not.toBeInTheDocument();
+
+    act(() => {
+      userEvent.type(userInput, "%");
+    });
+
+    const errMsg2 = screen.queryByText(/alphanumeric/i);
+    expect(errMsg2).toBeInTheDocument();
+  });
+
+  test("age field", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const ageInput = screen.getByPlaceholderText(/age/i);
+    expect(ageInput).toBeInTheDocument();
+
+    const errMsg1 = screen.queryByText(/too old/i);
+    const errMsg2 = screen.queryByText(/that is not a number/i);
+
+    expect(errMsg1).not.toBeInTheDocument();
+    expect(errMsg2).not.toBeInTheDocument();
+
+    act(() => {
+      userEvent.type(ageInput, "333");
+    });
+
+    const errMsg11 = screen.queryByText(/too old/i);
+    expect(errMsg11).toBeInTheDocument();
+
+    act(() => {
+      userEvent.clear(ageInput);
+      userEvent.type(ageInput, "33");
+    });
+
+    const errMsg111 = screen.queryByText(/too old/i);
+    expect(errMsg111).not.toBeInTheDocument();
+
+    act(() => {
+      userEvent.type(ageInput, "3f");
+    });
+
+    const errMsg22 = screen.queryByText(/that is not a number/i);
+    expect(errMsg22).toBeInTheDocument();
+  });
+
+  test("Whats your gender?", () => {
     render(
       <BrowserRouter>
         <Register />
       </BrowserRouter>
     );
 
-    const emailInput = screen.getByLabelText(/email/i);
-    expect(emailInput).toBeInTheDocument();
+    const genderSelect = screen.getByLabelText(/gender/i);
+    expect(genderSelect).not.toHaveValue("Male");
+
+    act(() => {
+      fireEvent.change(genderSelect, { target: { value: "Male" } });
+    });
+
+    const updatedGender = screen.getByDisplayValue("Male");
+    expect(updatedGender).toBeInTheDocument();
+    expect(updatedGender).toHaveValue("Male");
+  });
+
+  test("all about password", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+
+    const pw1 = screen.getByPlaceholderText("password...");
+    const pw2 = screen.getByPlaceholderText("password again...");
+    expect(pw1).toBeInTheDocument();
+    expect(pw2).toBeInTheDocument();
+
+    const pw1err1 = screen.queryByText(/one uppercase/i);
+    expect(pw1err1).not.toBeInTheDocument();
+
+    act(() => {
+      userEvent.type(pw1, "help");
+    });
+
+    const pw1err2 = screen.queryByText(/one uppercase/i);
+    expect(pw1err2).toBeInTheDocument();
+
+    const pw2err1 = screen.queryByText(/passwords doesn't match/i);
+    expect(pw2err1).not.toBeInTheDocument();
+
+    act(() => {
+      userEvent.type(pw2, "hel");
+    });
+
+    const pw2err2 = screen.queryByText(/passwords doesn't match/i);
+    expect(pw2err2).toBeInTheDocument();
+
+    act(() => {
+      userEvent.type(pw2, "p");
+    });
+
+    const pw2err3 = screen.queryByText(/passwords doesn't match/i);
+    expect(pw2err3).not.toBeInTheDocument();
   });
 });

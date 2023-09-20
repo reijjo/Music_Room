@@ -65,7 +65,7 @@ const pwCheck = (passwd: string): MessageInfo | undefined => {
   if (!/[!._\-@#*$]/.test(passwd)) {
     return {
       className: "infoError",
-      message: "Passwords needs one special character (!._-@#*$)",
+      message: "Passwords needs one special character !._-@#*$",
     };
   }
 

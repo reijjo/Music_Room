@@ -128,7 +128,7 @@ const Register = () => {
     }
 
     if (!/[!._\-@#*$]/.test(value)) {
-      setPwSpecialMsg("At least one special character (!._-@#*$)");
+      setPwSpecialMsg("At least one special character !._-@#*$");
     } else {
       setPwSpecialMsg(null);
     }
@@ -221,7 +221,7 @@ const Register = () => {
         <div
           style={{ padding: "0.1vh", textAlign: "center", marginTop: "4px" }}
         >
-          Or register with
+          Or Login with
         </div>
         <div className="oauth-logos">
           <div onClick={() => console.log("Facebook OAUTH")}>
@@ -233,7 +233,7 @@ const Register = () => {
             <div>GOOGLE</div>
           </div>
         </div>
-        <div style={{ textAlign: "center" }}>or</div>
+        <div style={{ textAlign: "center" }}>Or</div>
         <form onSubmit={registerUser} style={{}}>
           <div className="reg-fields">
             {/* EMAIL */}
@@ -307,6 +307,7 @@ const Register = () => {
             >
               <label htmlFor="password">Password</label>
               <InputField
+                data-testid="password"
                 className="reg-input"
                 type={showPassword ? "text" : "password"}
                 placeholder="password..."
@@ -401,8 +402,8 @@ const Register = () => {
                 <div>- {confirmPwMsg}</div>
               </div>
             )}
+            {/* AGE */}
             <div>
-              {/* AGE */}
               <label htmlFor="age">Age</label>
               <InputField
                 className="reg-input"
@@ -474,7 +475,7 @@ const Register = () => {
                 padding: "2vh",
                 backgroundColor: "var(--prima)",
                 color: "white",
-                width: "50%",
+                width: "40%",
                 maxWidth: "200px",
                 alignSelf: "center",
               }}
