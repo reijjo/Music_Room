@@ -28,6 +28,7 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
-    "tsconfigRootDir": "Hive/Music_Room/Web/server/"
+    // "tsconfigRootDir": "*"
+    "tsconfigRootDir": "Hive/outer-circle/Music_Room/Web/server/"
   }
 }
