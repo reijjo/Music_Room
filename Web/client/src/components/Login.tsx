@@ -42,19 +42,15 @@ const Login = () => {
   const login = async (event: SyntheticEvent) => {
     event.preventDefault();
     const logging = await userService.logUser(logData);
-    // if (logData.jwtoken) {
-    //   window.localStorage.setItem('music-token', JSON.stringify(logData.jwtoken));
-    // }
-    console.log("logdata", logData);
+    console.log("logdata", logging);
+    if (logging.token) {
+      localStorage.setItem("music-token", logging.token);
+    }
 
     setMessageBanner(logging.messageBanner);
     setTimeout(() => {
       setMessageBanner({ message: "", className: "" });
     }, 6000);
-    console.log("logging response", logging);
-
-    console.log("user", logData.logincredential);
-    console.log("passwd", logData.password);
   };
 
   return (

@@ -30,10 +30,26 @@ const logUser = async (user: LoginCredentials) => {
   }
 };
 
+const getToken = async (token: string) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.get(`${baseUrl}/token`, config);
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching token", error);
+  }
+};
+
 const userService = {
   regUser,
   verifyUser,
   logUser,
+  getToken,
 };
 
 export default userService;

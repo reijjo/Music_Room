@@ -34,7 +34,6 @@ export type User = Omit<FullUserData, "passwd" | "verifycode">;
 export interface LoginCredentials {
   logincredential: string;
   password: string;
-  jwtoken?: string;
 }
 
 export interface MessageInfo {

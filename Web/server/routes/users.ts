@@ -1,10 +1,17 @@
 import express, { Request, Response } from "express";
-import { FullUserData, LoginCredentials, RegisterData } from "../utils/types";
+import {
+  DecodedToken,
+  FullUserData,
+  LoginCredentials,
+  RegisterData,
+  User,
+} from "../utils/types";
 import checks from "../utils/regChecks";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import { config } from "../utils/config";
 import { pool } from "../utils/dbConnection";
+import jwt from "jsonwebtoken";
 
 const usersRouter = express.Router();
 
@@ -29,14 +36,6 @@ const sendVerifyCode = async (email: string, verifyCode: string) => {
     };
 
     await transporter.sendMail(options);
-    // transporter.sendMail(options, (err, info) => {
-    //   if (err) {
-    //     console.log("MAIL ERROR", err);
-    //   } else {
-    //     console.log("Email sent", info);
-    //     return undefined;
-    //   }
-    // });
   } catch (error) {
     console.error("Error sending email!", error);
   }
@@ -194,12 +193,28 @@ usersRouter.post("/login", async (req: Request, res: Response) => {
           });
         } else {
           // set the JSON WEB TOKEN
+          const userForToken = {
+            id: user.id,
+            user: user.email || user.username,
+          };
+          const secret = config.JWT_SECRET;
+
+          if (secret) {
+            const token = jwt.sign(userForToken, secret, {
+              expiresIn: 60 * 60,
+            });
+            return res.status(200).send({
+              messageBanner: {
+                message: `token set`,
+                className: "infoOK",
+              },
+              token,
+              user: user,
+            });
+          }
 
           return res.send({
-            messageBanner: {
-              message: `token set`,
-              className: "infoOK",
-            },
+            extra: "extra return??",
           });
         }
       }
@@ -223,10 +238,43 @@ usersRouter.post("/login", async (req: Request, res: Response) => {
 });
 
 // Get user with token
-usersRouter.get("/token", (_req: Request, res: Response) => {
-  return res.status(200).json({
-    message: "Authorized",
-  });
+usersRouter.get("/token", (req: Request, res: Response) => {
+  console.log("REQ", req.headers.authorization?.split(" ")[1]);
+  const token = req.headers.authorization?.split(" ")[1];
+  const secret = config.JWT_SECRET;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized." });
+  }
+
+  if (secret) {
+    jwt.verify(token, secret, async (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const user = decoded as DecodedToken;
+      let getUserSQL = "";
+      console.log("USER", user.user);
+
+      if (user.user.includes("@")) {
+        getUserSQL = `SELECT * FROM users WHERE email = $1`;
+      } else {
+        getUserSQL = `SELECT * FROM users WHERE username = $1`;
+      }
+
+      const getUser = await pool.query(getUserSQL, [user.user]);
+      const tokenUser = getUser.rows[0] as User;
+
+      console.log("TOKEN USER", tokenUser);
+
+      return res.status(200).json({
+        message: "Authorized",
+        tokenUser,
+      });
+    });
+  }
+  return undefined;
 });
 
 // Get all users

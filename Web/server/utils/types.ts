@@ -41,6 +41,13 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface DecodedToken {
+  id: number;
+  user: string;
+  iat: number;
+  exp: number;
+}
+
 export interface ConfigType {
   PORT?: number;
   POSTGRES_USER?: string;
@@ -51,7 +58,4 @@ export interface ConfigType {
   EMAIL_USER?: string;
   EMAIL_PASSWD?: string;
   JWT_SECRET?: string;
-  JWT_ISSUER?: string;
-  JWT_EXPIRETIME?: number;
-  // token: object;
 }
