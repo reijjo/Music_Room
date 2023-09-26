@@ -127,8 +127,8 @@ const Register = () => {
       setPwCapitalMsg(null);
     }
 
-    if (!/[!._\-@#*$]/.test(value)) {
-      setPwSpecialMsg("At least one special character !._-@#*$");
+    if (!/[!._\-#*$]/.test(value)) {
+      setPwSpecialMsg("At least one special character !._-#*$");
     } else {
       setPwSpecialMsg(null);
     }

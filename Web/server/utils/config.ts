@@ -13,6 +13,8 @@ const PGPORT: number = parseInt(process.env.PGPORT || "", 10);
 const EMAIL_USER = process.env.EMAIL_USERNAME;
 const EMAIL_PASSWD = process.env.EMAIL_PASSWORD;
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 export const config: ConfigType = {
   PORT,
   POSTGRES_USER,
@@ -22,4 +24,5 @@ export const config: ConfigType = {
   PGPORT,
   EMAIL_USER,
   EMAIL_PASSWD,
+  JWT_SECRET,
 };

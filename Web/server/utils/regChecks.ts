@@ -22,12 +22,12 @@ const emailCheck = (email: string): MessageInfo | undefined => {
 };
 
 const usernameCheck = (username: string): MessageInfo | undefined => {
-  const nameRegex = /^[a-zA-Z0-9!._\-@#*$]+$/;
+  const nameRegex = /^[a-zA-Z0-9!._\-#*$]+$/;
 
   if (!username.match(nameRegex)) {
     return {
       className: "infoError",
-      message: "Only alphanumeric and !._-@#*$ on username!",
+      message: "Only alphanumeric and !._-#*$ on username!",
     };
   }
 

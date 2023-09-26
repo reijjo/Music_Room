@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ForgotPw from "./components/ForgotPw";
 import Verify from "./components/Verify";
+import Logged from "./components/Logged";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/forgotpw" element={<ForgotPw />} />
           <Route path="/:code/verify" element={<Verify />} />
+          <Route path="/logged" element={<Logged />} />
         </Routes>
       </div>
       <Footer />

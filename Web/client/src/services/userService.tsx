@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RegisterData } from "../utils/types";
+import { LoginCredentials, RegisterData } from "../utils/types";
 
 const baseUrl = "/api/users";
 
@@ -21,9 +21,19 @@ const verifyUser = async (verifycode: string) => {
   }
 };
 
+const logUser = async (user: LoginCredentials) => {
+  try {
+    const response = await axios.post(`${baseUrl}/login`, user);
+    return response.data;
+  } catch (error) {
+    console.log("Error on login", error);
+  }
+};
+
 const userService = {
   regUser,
   verifyUser,
+  logUser,
 };
 
 export default userService;

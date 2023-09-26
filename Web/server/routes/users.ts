@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { RegisterData } from "../utils/types";
+import { FullUserData, LoginCredentials, RegisterData } from "../utils/types";
 import checks from "../utils/regChecks";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
@@ -43,7 +43,6 @@ const sendVerifyCode = async (email: string, verifyCode: string) => {
 };
 
 // Route to register the user
-
 usersRouter.post("/", async (req: Request, res: Response) => {
   const user = req.body as RegisterData;
 
@@ -79,7 +78,6 @@ usersRouter.post("/", async (req: Request, res: Response) => {
     const verifyCode: string = passwdHash.replace("/", "3");
 
     // Add user to database
-
     try {
       const dupCheck = `SELECT * FROM users WHERE username = $1 OR email = $2`;
       const dupRes = await pool.query(dupCheck, [user.username, user.email]);
@@ -135,6 +133,9 @@ usersRouter.get("/:code/verify", async (req: Request, res: Response) => {
     const response = await pool.query(sql, [verifycode]);
     // console.log("aa", response.rows[0].username);
     if (response.rows.length > 0) {
+      const username = response.rows[0].username as string;
+      const updateStatus = `UPDATE users SET user_status = $1 WHERE username = $2`;
+      await pool.query(updateStatus, [1, username]);
       res.send(response.rows[0]);
     } else {
       res.send(null);
@@ -143,4 +144,108 @@ usersRouter.get("/:code/verify", async (req: Request, res: Response) => {
     console.error("Error verifying user", err);
   }
 });
+
+// Login route
+usersRouter.post("/login", async (req: Request, res: Response) => {
+  const { logincredential, password } = req.body as LoginCredentials;
+
+  if (logincredential.length > 30 || password.length > 30) {
+    return res.send({
+      messageBanner: {
+        message: `Too long username / email or password`,
+        className: "infoError",
+      },
+    });
+  }
+
+  let userSQL = "";
+
+  if (logincredential.includes("@")) {
+    console.log("its an email");
+    userSQL = `SELECT * FROM users WHERE email = $1`;
+  } else {
+    console.log("its username");
+    userSQL = `SELECT * FROM users WHERE username = $1`;
+  }
+
+  try {
+    const findUser = await pool.query(userSQL, [logincredential]);
+    const user = findUser.rows[0] as FullUserData;
+
+    // We check is there a user and the user status
+    if (findUser.rowCount === 1) {
+      if (parseInt(user.user_status) === 0) {
+        return res.send({
+          messageBanner: {
+            message: `Verify your email!`,
+            className: "infoError",
+          },
+        });
+      } else {
+        // If everything is ok we compare the passwords
+        const passwdOk = await bcrypt.compare(password, user.passwd);
+        if (!passwdOk) {
+          return res.send({
+            messageBanner: {
+              message: `Check your password`,
+              className: "infoError",
+            },
+            error: "invalid username or password",
+          });
+        } else {
+          // set the JSON WEB TOKEN
+
+          return res.send({
+            messageBanner: {
+              message: `token set`,
+              className: "infoOK",
+            },
+          });
+        }
+      }
+    } else {
+      return res.send({
+        messageBanner: {
+          message: `No such user.`,
+          className: "infoError",
+        },
+      });
+    }
+  } catch (error) {
+    console.log("LOgin error", error);
+    return res.send({
+      messageBanner: {
+        message: `An error occurred while logging in.`,
+        className: "infoError",
+      },
+    });
+  }
+});
+
+// Get user with token
+usersRouter.get("/token", (_req: Request, res: Response) => {
+  return res.status(200).json({
+    message: "Authorized",
+  });
+});
+
+// Get all users
+usersRouter.get("/", async (_req: Request, res: Response) => {
+  const usersSQL = `SELECT * FROM users`;
+
+  try {
+    const userRes = await pool.query(usersSQL);
+    const users = userRes.rows;
+
+    res.status(200).json({
+      users,
+      count: users.length,
+    });
+  } catch (error) {
+    console.log("Error fetching users", error);
+  }
+
+  console.log("hihuu");
+});
+
 export { usersRouter };

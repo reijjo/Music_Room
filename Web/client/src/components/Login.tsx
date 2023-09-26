@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 import fbico from "../images/icons8-facebook.png";
 import googleico from "../images/icons8-google.png";
@@ -7,9 +7,55 @@ import showico from "../images/icons8-visibility.png";
 
 import MyButton from "./common/Button";
 import InputField from "./common/InputField";
+import MessageBanner from "./common/MessageBanner";
+import { LoginCredentials, MessageInfo } from "../utils/types";
+import userService from "../services/userService";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [logData, setLogData] = useState<LoginCredentials>({
+    logincredential: "",
+    password: "",
+  });
+  const [messageBanner, setMessageBanner] = useState<MessageInfo>({
+    message: "",
+    className: "",
+  });
+
+  const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const value = event.target.value;
+    setLogData({
+      ...logData,
+      logincredential: value,
+    });
+  };
+
+  const handlePw = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setLogData({
+      ...logData,
+      password: value,
+    });
+  };
+
+  const login = async (event: SyntheticEvent) => {
+    event.preventDefault();
+    const logging = await userService.logUser(logData);
+    // if (logData.jwtoken) {
+    //   window.localStorage.setItem('music-token', JSON.stringify(logData.jwtoken));
+    // }
+    console.log("logdata", logData);
+
+    setMessageBanner(logging.messageBanner);
+    setTimeout(() => {
+      setMessageBanner({ message: "", className: "" });
+    }, 6000);
+    console.log("logging response", logging);
+
+    console.log("user", logData.logincredential);
+    console.log("passwd", logData.password);
+  };
 
   return (
     <div className="login-container">
@@ -27,7 +73,7 @@ const Login = () => {
           </div>
         </div>
         <div>or</div>
-        <form>
+        <form onSubmit={login}>
           <div className="reg-fields">
             {/* USERNAME */}
             <div>
@@ -37,14 +83,13 @@ const Login = () => {
               <InputField
                 className="reg-input"
                 type="text"
-                // value={regData.email}
-                // value="hohii"
+                value={logData.logincredential}
                 autoComplete="off"
                 required={true}
                 name="log-user"
                 id="log-user"
                 placeholder="your email or username..."
-                // onChange={handleEmail}
+                onChange={handleName}
                 onFocus={() => {
                   // setEmailValidFocus(true);
                 }}
@@ -60,15 +105,14 @@ const Login = () => {
               </label>
               <InputField
                 className="reg-input"
-                type="password"
-                // value={regData.email}
-                // value="hohii"
+                type={showPassword ? "text" : "password"}
+                value={logData.password}
                 autoComplete="off"
                 required={true}
                 name="log-pw"
                 id="log-pw"
                 placeholder="password..."
-                // onChange={handleEmail}
+                onChange={handlePw}
                 onFocus={() => {
                   // setEmailValidFocus(true);
                 }}
@@ -88,10 +132,24 @@ const Login = () => {
                 )}
               </div>
             </div>
+            {messageBanner &&
+              (messageBanner.className === "infoError" ||
+                messageBanner.className === "infoOK") && (
+                <MessageBanner
+                  className={messageBanner.className}
+                  message={messageBanner.message}
+                />
+              )}
             <div>
               <MyButton
-                className="myButton filledButton extra-button"
-                style={{ margin: "2vh 0", padding: "1.5vh 0" }}
+                type="submit"
+                className="myButton filledButton extra-button2"
+                style={{
+                  margin: "2vh 0",
+                  padding: "1.5vh 0",
+                  backgroundColor: "var(--primamid)",
+                  color: "white",
+                }}
               >
                 Login!
               </MyButton>

@@ -36,6 +36,11 @@ export interface MessageInfo {
   className: string;
 }
 
+export interface LoginCredentials {
+  logincredential: string;
+  password: string;
+}
+
 export interface ConfigType {
   PORT?: number;
   POSTGRES_USER?: string;
@@ -45,4 +50,8 @@ export interface ConfigType {
   PGPORT?: number;
   EMAIL_USER?: string;
   EMAIL_PASSWD?: string;
+  JWT_SECRET?: string;
+  JWT_ISSUER?: string;
+  JWT_EXPIRETIME?: number;
+  // token: object;
 }
