@@ -12,34 +12,49 @@ import userService from "./services/userService";
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("music-token");
+    const storedToken = localStorage.getItem("music-token");
 
     const verifiedToken = async (token: string) => {
-      const res = await userService.getToken(token);
-      setUser(res.tokenUser);
-      console.log("Verifytoken res", res);
+      try {
+        const res = await userService.getToken(token);
+        setUser(res.tokenUser);
+        console.log("Verifytoken res", res);
+      } catch (error) {
+        console.log("Error verifying token", error);
+        setToken(null);
+        setUser(null);
+        localStorage.removeItem("music-token");
+      }
     };
 
-    if (token) {
-      verifiedToken(token);
+    if (storedToken) {
+      setToken(storedToken);
+      verifiedToken(storedToken);
     }
-  }, []);
+  }, [token]);
 
   console.log("APP.TSX user", user);
 
   return (
     <Router>
       <div id="main">
-        <Navbar />
+        {!user ? <Navbar /> : null}
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={user ? <Logged user={user} /> : <Login />}
+          />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotpw" element={<ForgotPw />} />
           <Route path="/:code/verify" element={<Verify />} />
-          <Route path="/logged" element={<Logged />} />
+          <Route
+            path="/logged"
+            element={user ? <Logged user={user} /> : <Login />}
+          />
         </Routes>
       </div>
       <Footer />

@@ -45,6 +45,7 @@ const Login = () => {
     console.log("logdata", logging);
     if (logging.token) {
       localStorage.setItem("music-token", logging.token);
+      window.location.replace("/logged");
     }
 
     setMessageBanner(logging.messageBanner);
