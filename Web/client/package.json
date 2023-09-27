@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "ts-jest": "^29.1.1",
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/react-modal": "^3.16.1",
     "@types/react-router-dom": "^5.3.3",
     "axios-mock-adapter": "^1.22.0"
   },

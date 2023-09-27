@@ -40,3 +40,10 @@ export interface MessageInfo {
   message: string;
   className: string;
 }
+
+export interface DecodedToken {
+  id: number;
+  user: string;
+  iat: number;
+  exp: number;
+}

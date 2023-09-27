@@ -201,7 +201,8 @@ usersRouter.post("/login", async (req: Request, res: Response) => {
 
           if (secret) {
             const token = jwt.sign(userForToken, secret, {
-              expiresIn: 60 * 60,
+              // expiresIn: 60 * 60,
+              expiresIn: 60,
             });
             return res.status(200).send({
               messageBanner: {
@@ -253,24 +254,25 @@ usersRouter.get("/token", (req: Request, res: Response) => {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
-      const user = decoded as DecodedToken;
+      const tokenData = decoded as DecodedToken;
       let getUserSQL = "";
-      console.log("USER", user.user);
+      console.log("USER", tokenData.user);
 
-      if (user.user.includes("@")) {
+      if (tokenData.user.includes("@")) {
         getUserSQL = `SELECT * FROM users WHERE email = $1`;
       } else {
         getUserSQL = `SELECT * FROM users WHERE username = $1`;
       }
 
-      const getUser = await pool.query(getUserSQL, [user.user]);
+      const getUser = await pool.query(getUserSQL, [tokenData.user]);
       const tokenUser = getUser.rows[0] as User;
 
-      console.log("TOKEN USER", tokenUser);
+      // console.log("TOKEN USER", tokenUser);
 
       return res.status(200).json({
         message: "Authorized",
         tokenUser,
+        tokenData,
       });
     });
   }

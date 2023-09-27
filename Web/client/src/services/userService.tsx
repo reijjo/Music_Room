@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LoginCredentials, RegisterData } from "../utils/types";
+// import { ErrorResponse } from "react-router-dom";
 
 const baseUrl = "/api/users";
 
@@ -41,7 +42,21 @@ const getToken = async (token: string) => {
     const response = await axios.get(`${baseUrl}/token`, config);
     return response.data;
   } catch (error) {
-    console.log("Error fetching token", error);
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data.message);
+    } else {
+      console.log("Error fetching token", error);
+    }
+
+    // const axiosError = error as AxiosError;
+
+    // if (
+    //   axiosError.response?.data &&
+    //   typeof axiosError.response.data === "object"
+    // ) {
+    //   const errorMSG = axiosError.response.data as ErrorResponse;
+    //   console.log(errorMSG);
+    // }
   }
 };
 
