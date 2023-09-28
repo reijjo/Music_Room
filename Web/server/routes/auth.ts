@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import express, { Request, Response } from "express";
 // import { pool } from "../utils/dbConnection";
 import jwt from "jsonwebtoken";
-import passport, { Profile } from "passport";
+import passport from "passport";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import { config } from "../utils/config";
 import { DecodedToken } from "../utils/types";
@@ -45,38 +46,70 @@ authRouter.get("/refresh-token", (req: Request, res: Response) => {
 });
 
 // oauth / passport facebook login
+// passport.use(
+//   new FacebookStrategy(
+//     {
+//       clientID: config.FB_APP_ID,
+//       clientSecret: config.FB_APP_SECRET,
+//       callbackURL: "http://localhost:3000/api/auth/facebook/callback",
+//     },
+//     () =>
+//       (
+//         accessToken: string,
+//         refreshToken: string,
+//         profile: Profile,
+//         callback: () => void
+//       ) => {
+//         console.log(accessToken, refreshToken, profile, callback);
+//       }
+//   )
+// );
 passport.use(
   new FacebookStrategy(
     {
       clientID: config.FB_APP_ID,
       clientSecret: config.FB_APP_SECRET,
-      callbackURL: "http://localhost:3000/api/auth/facebook/callback",
+      callbackURL: "/facebook/callback",
     },
-    () =>
-      (
-        accessToken: string,
-        refreshToken: string,
-        profile: Profile,
-        callback: () => void
-      ) => {
-        console.log(accessToken, refreshToken, profile, callback);
-      }
+    function (accessToken, refreshToken, profile, cb) {
+      // save the profile on the Database
+      // Save the accessToken and refreshToken if you need to call facebook apis later on
+      console.log(accessToken, refreshToken);
+      return cb(null, profile);
+    }
   )
 );
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj as object);
+});
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 authRouter.get("/facebook", passport.authenticate("facebook"));
 
+// authRouter.get(
+//   "/facebook/callback",
+//   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+//   passport.authenticate(
+//     "facebook",
+//     { failureRedirect: "/login" },
+//     () => (_req: Request, res: Response) => {
+//       res.redirect("/logged");
+//     }
+//   )
+// );
 authRouter.get(
   "/facebook/callback",
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  passport.authenticate(
-    "facebook",
-    { failureRedirect: "/login" },
-    () => (_req: Request, res: Response) => {
-      res.redirect("/logged");
-    }
-  )
+  passport.authenticate("facebook", {
+    failureRedirect: `${config.FRONTEND_HOST}/login`,
+  }),
+  (_req, res) => {
+    res.send(`${config.FRONTEND_HOST}/logged`);
+  }
 );
 
 export { authRouter };

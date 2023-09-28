@@ -10,7 +10,7 @@ import InputField from "./common/InputField";
 import MessageBanner from "./common/MessageBanner";
 import { LoginCredentials, MessageInfo } from "../utils/types";
 import userService from "../services/userService";
-import authService from "../services/authService";
+// import authService from "../services/authService";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,6 +56,7 @@ const Login = () => {
   };
 
   const fbLogin = async () => {
+    window.location.replace("http://localhost:3001/api/auth/facebook");
     console.log("fb login res");
   };
 

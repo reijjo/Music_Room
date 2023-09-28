@@ -60,4 +60,5 @@ export interface ConfigType {
   JWT_SECRET?: string;
   FB_APP_ID: string;
   FB_APP_SECRET: string;
+  FRONTEND_HOST: string;
 }
