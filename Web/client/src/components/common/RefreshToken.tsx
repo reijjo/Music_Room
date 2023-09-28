@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
+import MyButton from "./Button";
 
 const RefreshToken = () => {
-  const [tokenWarning, setTokenWarning] = useState(false);
-
   return (
     <div className="token-warning">
-      <p>Your token is about to expire</p>
-      <button>I do not care.</button>
-      <button>Get fresh token!</button>
+      <h2>Still here?</h2>
+      <MyButton className="myButton outlinedButton">Yup!</MyButton>
+      <MyButton className="myButton textButton">nope.</MyButton>
     </div>
   );
 };

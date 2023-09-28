@@ -10,6 +10,7 @@ import InputField from "./common/InputField";
 import MessageBanner from "./common/MessageBanner";
 import { LoginCredentials, MessageInfo } from "../utils/types";
 import userService from "../services/userService";
+import authService from "../services/authService";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,13 +55,17 @@ const Login = () => {
     }, 6000);
   };
 
+  const fbLogin = async () => {
+    console.log("fb login res");
+  };
+
   return (
     <div className="login-container">
       <div className="login-here">
         <h1>Login here!</h1>
         <div>Login with</div>
         <div className="oauth-logos">
-          <div onClick={() => console.log("Facebook OAUTH")}>
+          <div onClick={fbLogin}>
             <img src={fbico} alt="oauth" title="facebook" />
             <div>FACEBOOK</div>
           </div>

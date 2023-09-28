@@ -10,9 +10,11 @@ import Register from "./components/Register";
 import ForgotPw from "./components/ForgotPw";
 import Verify from "./components/Verify";
 import Logged from "./components/Logged";
+import MyButton from "./components/common/Button";
 import userService from "./services/userService";
 import authService from "./services/authService";
 import { DecodedToken } from "./utils/types";
+// import RefreshToken from "./components/common/RefreshToken";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -21,6 +23,26 @@ const App = () => {
   const [showTokenRefresh, setShowTokenRefresh] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
 
+  const checkTokenExpiration = () => {
+    if (decodedToken) {
+      const expirationTime = decodedToken.exp * 1000;
+      const currentTime = Date.now();
+      const remaining = expirationTime - currentTime;
+
+      setTimeRemaining(remaining);
+      console.log("remaining", timeRemaining);
+
+      if (remaining <= 0) {
+        console.log("token has expired");
+        setUser(null);
+        localStorage.removeItem("music-token");
+
+        window.location.replace("/");
+      }
+    }
+  };
+
+  // Token verification
   useEffect(() => {
     const storedToken = localStorage.getItem("music-token");
 
@@ -52,62 +74,33 @@ const App = () => {
   }, [token]);
 
   useEffect(() => {
-    // console.log("Decoded222222", decodedToken);
-
-    const checkTokenExpiration = () => {
-      if (decodedToken) {
-        const expirationTime = decodedToken.exp * 1000;
-        const currentTime = Date.now();
-        const remaining = expirationTime - currentTime;
-
-        setTimeRemaining(remaining);
-        console.log("remaining", timeRemaining);
-
-        if (remaining <= 0) {
-          console.log("token has expired");
-          window.location.replace("/");
-        }
-      }
-    };
-
-    // checkTokenExpiration();
-
-    // const timeInterval = setInterval(checkTokenExpiration, 5 * 1000);
     const timeInterval = setInterval(() => {
       checkTokenExpiration();
-      if (timeRemaining !== null && timeRemaining <= 30 * 1000) {
+      if (timeRemaining !== null && timeRemaining <= 10 * 60 * 1000) {
         setShowTokenRefresh(true);
       }
-    }, 5 * 1000);
+    }, 5 * 60 * 1000);
 
     return () => clearInterval(timeInterval);
   }, [decodedToken, timeRemaining]);
 
   // for refresh token
-  useEffect(() => {
+  const handleTokenRefresh: () => void = async () => {
     const storedToken = localStorage.getItem("music-token");
 
-    const refreshToken = async (token: string) => {
-      try {
-        const res = await authService.refreshToken(token);
-        console.log("AUTH SERVEI", res);
-      } catch (error) {
-        console.log("refreshToken error", error);
-      }
-    };
-
     if (storedToken) {
-      refreshToken(storedToken);
+      try {
+        const res = await authService.refreshToken(storedToken);
+        console.log("refresh token res", res);
+        localStorage.setItem("music-token", res.newToken);
+        setToken(res.newToken);
+        setTimeRemaining(15 * 60 * 1000);
+        setShowTokenRefresh(false);
+      } catch (error) {
+        console.log("Error refreshing token", error);
+      }
     }
-  }, [showTokenRefresh]);
-
-  const handleTokenRefresh = () => {
-    console.log("something with the token");
   };
-
-  // if (user) {
-  //   console.log("APP.TSX user", user);
-  // }
 
   const customStyles = {
     content: {
@@ -117,6 +110,8 @@ const App = () => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      color: "var(--white)",
+      backgroundColor: "var(--prima)",
     },
   };
 
@@ -146,10 +141,21 @@ const App = () => {
           shouldCloseOnOverlayClick={false}
           contentLabel="Want to stay logged in?"
         >
-          <h2>Your session is about to expire!</h2>
-          <p>Refresh session?</p>
-          <button onClick={handleTokenRefresh}>Refresh</button>
-          <button onClick={() => setShowTokenRefresh(false)}>no thanks</button>
+          <h2>Still here?</h2>
+          <MyButton
+            className="myButton outlinedButton"
+            type="button"
+            onClick={handleTokenRefresh}
+          >
+            Yup!
+          </MyButton>
+          <MyButton
+            style={{ color: "white" }}
+            className="myButton textButton"
+            onClick={() => setShowTokenRefresh(false)}
+          >
+            nope.
+          </MyButton>
         </Modal>
       </div>
       {!user ? <Footer /> : null}

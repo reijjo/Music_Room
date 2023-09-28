@@ -47,16 +47,6 @@ const getToken = async (token: string) => {
     } else {
       console.log("Error fetching token", error);
     }
-
-    // const axiosError = error as AxiosError;
-
-    // if (
-    //   axiosError.response?.data &&
-    //   typeof axiosError.response.data === "object"
-    // ) {
-    //   const errorMSG = axiosError.response.data as ErrorResponse;
-    //   console.log(errorMSG);
-    // }
   }
 };
 

@@ -202,7 +202,7 @@ usersRouter.post("/login", async (req: Request, res: Response) => {
           if (secret) {
             const token = jwt.sign(userForToken, secret, {
               // expiresIn: 60 * 60,
-              expiresIn: 60,
+              expiresIn: 60 * 120,
             });
             return res.status(200).send({
               messageBanner: {

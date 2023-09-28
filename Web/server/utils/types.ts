@@ -58,4 +58,6 @@ export interface ConfigType {
   EMAIL_USER?: string;
   EMAIL_PASSWD?: string;
   JWT_SECRET?: string;
+  FB_APP_ID: string;
+  FB_APP_SECRET: string;
 }
