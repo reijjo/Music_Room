@@ -1,21 +1,3 @@
-# TODO
-
-- move login from userservice -> authservice
-- oauths server side
-- link fb / google accounts to profile
-- - select field for normal / google / fb
-- - public/friends/hidden tick
-
-## Facebook SDK
-
-https://developers.facebook.com/docs/facebook-login/web/
-
-- install types
-  `npm install --save-dev @types/facebook-js-sdk`
-
-- Make script in the frontend/public folder
-
-```js
 // <!-- Add the Facebook SDK for Javascript -->
 
 (function (d, s, id) {
@@ -34,7 +16,7 @@ window.fbAsyncInit = function () {
   // <!-- Initialize the SDK with your app and the Graph API version for your app -->
   // eslint-disable-next-line no-undef
   FB.init({
-    appId: "YOURAPPID",
+    appId: "3498155447118557",
     xfbml: true,
     version: "v18.0",
     // version: "{the-graph-api-version-for-your-app}",
@@ -57,12 +39,3 @@ window.fbAsyncInit = function () {
   //   }
   // });
 };
-```
-
-- add the script to index.html file
-
-```html
-<script src="%PUBLIC_URL%/fb-sdk.js"></script>
-```
-
-## GOOGLE OAUTH

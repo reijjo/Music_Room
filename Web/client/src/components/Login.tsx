@@ -1,4 +1,5 @@
 import { SyntheticEvent, useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
 
 import fbico from "../images/icons8-facebook.png";
 import googleico from "../images/icons8-google.png";
@@ -8,8 +9,9 @@ import showico from "../images/icons8-visibility.png";
 import MyButton from "./common/Button";
 import InputField from "./common/InputField";
 import MessageBanner from "./common/MessageBanner";
-import { LoginCredentials, MessageInfo } from "../utils/types";
+import { GoogleTokenObj, LoginCredentials, MessageInfo } from "../utils/types";
 import userService from "../services/userService";
+import authService from "../services/authService";
 // import authService from "../services/authService";
 
 const Login = () => {
@@ -55,8 +57,56 @@ const Login = () => {
     }, 6000);
   };
 
+  const loginGoogle = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log("Google token respo", tokenResponse);
+      console.log("scope stuff", tokenResponse.scope.split(" ")[3]);
+
+      const token = tokenResponse;
+      // const address = tokenResponse.scope.split(" ")[3];
+
+      const getResponse = async (token: GoogleTokenObj) => {
+        const res = await authService.googleLogin(token);
+        console.log("Google back", res);
+      };
+
+      getResponse(token);
+      // fetch(`${address}`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => console.log(data))
+      //   .catch((error) => {
+      //     console.log("Error getting user data from google", error);
+      //   });
+    },
+    onError: (error) => console.log("Google login error", error),
+  });
+
   const fbLogin = async () => {
-    window.location.replace("http://localhost:3001/api/auth/facebook");
+    FB.login(
+      function (response) {
+        if (response.status === "connected") {
+          FB.api(
+            "/me",
+            {
+              fields:
+                "id,name,first_name,last_name,short_name,email,picture,gender",
+            },
+            function (response) {
+              console.log("FB API", response);
+            }
+          );
+        } else {
+          console.log("Error connecting Facebook.");
+        }
+        console.log("FB LOGIN", response);
+      }
+      // { scope: "gender" }
+    );
+
     console.log("fb login res");
   };
 
@@ -70,7 +120,12 @@ const Login = () => {
             <img src={fbico} alt="oauth" title="facebook" />
             <div>FACEBOOK</div>
           </div>
-          <div onClick={() => console.log("Google OAUTH")}>
+          <div
+            onClick={() => {
+              console.log("Google OAUTH");
+              loginGoogle();
+            }}
+          >
             <img src={googleico} alt="oauth" title="facebook" />
             <div>GOOGLE</div>
           </div>

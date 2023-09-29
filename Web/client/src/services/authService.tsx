@@ -1,4 +1,5 @@
 import axios from "axios";
+import { GoogleTokenObj } from "../utils/types";
 
 const baseUrl = "/api/auth";
 
@@ -21,6 +22,19 @@ const refreshToken = async (token: string) => {
   }
 };
 
-const authService = { refreshToken };
+const googleLogin = async (token: GoogleTokenObj) => {
+  console.log("Axios google", token);
+  try {
+    const response = await axios.post(`${baseUrl}/google/token`, token);
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.log("Google token axios error", error);
+  }
+};
+
+const authService = { refreshToken, googleLogin };
 
 export default authService;

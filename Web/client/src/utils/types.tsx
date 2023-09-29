@@ -47,3 +47,12 @@ export interface DecodedToken {
   iat: number;
   exp: number;
 }
+
+export interface GoogleTokenObj {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+  // authuser: string;
+  prompt: string;
+}
