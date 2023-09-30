@@ -6,6 +6,7 @@ import {
   LoginCredentials,
   RegisterData,
   User,
+  // GoogleUser,
 } from "../utils/types";
 import checks from "../utils/regChecks";
 import bcrypt from "bcryptjs";
@@ -260,8 +261,27 @@ usersRouter.get("/token", (req: Request, res: Response) => {
       let getUserSQL = "";
       console.log("USER", tokenData);
 
+      // Google user
+
       if ("locale" in tokenData) {
         const tokenUser = tokenData;
+
+        getUserSQL = `SELECT * FROM google_users WHERE username = $1`;
+        const getGoogleUser = await pool.query(getUserSQL, [tokenUser.name]);
+        // const googleUser = getGoogleUser.rows[0] as GoogleUser;
+
+        if (getGoogleUser.rowCount < 1) {
+          try {
+            const googleUserSql = `INSERT INTO google_users (google_id, username, picture) VALUES ($1, $2, $3)`;
+            await pool.query(googleUserSql, [
+              tokenUser.id,
+              tokenUser.name,
+              tokenUser.picture,
+            ]);
+          } catch (error) {
+            console.log("Error adding google user to database", error);
+          }
+        }
 
         return res.status(200).json({
           message: "Authorized",
@@ -269,8 +289,9 @@ usersRouter.get("/token", (req: Request, res: Response) => {
           tokenData,
         });
       } else {
+        // For normal login
+
         if (tokenData.user.includes("@")) {
-          // For normal login
           getUserSQL = `SELECT * FROM users WHERE email = $1`;
         } else {
           getUserSQL = `SELECT * FROM users WHERE username = $1`;
