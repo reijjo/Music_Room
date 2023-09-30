@@ -63,10 +63,13 @@ const Login = () => {
       console.log("scope stuff", tokenResponse.scope.split(" ")[3]);
 
       const token = tokenResponse;
-      // const address = tokenResponse.scope.split(" ")[3];
 
       const getResponse = async (token: GoogleTokenObj) => {
         const res = await authService.googleLogin(token);
+        if (res.googleToken) {
+          localStorage.setItem("music-token", res.googleToken);
+          window.location.replace("/logged");
+        }
         console.log("Google back", res);
       };
 

@@ -48,6 +48,15 @@ export interface DecodedToken {
   exp: number;
 }
 
+export interface DecodedTokenGoogle extends DecodedToken {
+  email: string;
+  name: string;
+  given_name: string;
+  family_name: string;
+  picture: string;
+  locale: string;
+}
+
 export interface GoogleTokenObj {
   access_token: string;
   token_type: string;
@@ -55,6 +64,17 @@ export interface GoogleTokenObj {
   scope: string;
   // authuser: string;
   prompt: string;
+}
+
+export interface GoogleUser {
+  id: string;
+  email: string;
+  user: string;
+  name: string;
+  given_name: string;
+  family_name: string;
+  picture: string;
+  locale: string;
 }
 
 export interface ConfigType {

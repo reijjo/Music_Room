@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 // import passport from "passport";
 // import { Strategy as FacebookStrategy } from "passport-facebook";
 import { config } from "../utils/config";
-import { DecodedToken, GoogleTokenObj } from "../utils/types";
+import { DecodedToken, GoogleTokenObj, GoogleUser } from "../utils/types";
 
 const authRouter = express.Router();
 
@@ -62,10 +62,27 @@ authRouter.post("/google/token", async (req: Request, res: Response) => {
       },
     });
 
-    const data: unknown = await result.json();
+    const data: GoogleUser = (await result.json()) as GoogleUser;
+    const secret = config.JWT_SECRET as string;
+    const userForToken = {
+      id: data.id,
+      email: data.email,
+      user: data.name,
+      name: data.name,
+      given_name: data.given_name,
+      family_name: data.family_name,
+      picture: data.picture,
+      locale: data.locale,
+    };
+
+    // ADD TO DATABASE ID AS USER_ID, EMAIL, NAME, PICTURE
+
+    const googleToken = jwt.sign(userForToken, secret, {
+      expiresIn: 60 * 120,
+    });
 
     console.log("back result", data);
-    res.send(data);
+    res.status(200).send({ user: data, googleToken });
   } catch (error) {
     console.log("Error fetching Google user", error);
   }

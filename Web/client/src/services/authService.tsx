@@ -23,13 +23,9 @@ const refreshToken = async (token: string) => {
 };
 
 const googleLogin = async (token: GoogleTokenObj) => {
-  console.log("Axios google", token);
   try {
     const response = await axios.post(`${baseUrl}/google/token`, token);
-
-    console.log(response);
-
-    return response;
+    return response.data;
   } catch (error) {
     console.log("Google token axios error", error);
   }

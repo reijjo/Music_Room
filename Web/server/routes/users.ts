@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import {
   DecodedToken,
+  DecodedTokenGoogle,
   FullUserData,
   LoginCredentials,
   RegisterData,
@@ -240,6 +241,7 @@ usersRouter.post("/login", async (req: Request, res: Response) => {
 
 // Get user with token
 usersRouter.get("/token", (req: Request, res: Response) => {
+  console.log("--- ON BACKEND /TOKEN ---");
   console.log("REQ", req.headers.authorization?.split(" ")[1]);
   const token = req.headers.authorization?.split(" ")[1];
   const secret = config.JWT_SECRET;
@@ -254,26 +256,36 @@ usersRouter.get("/token", (req: Request, res: Response) => {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
-      const tokenData = decoded as DecodedToken;
+      const tokenData = decoded as DecodedToken | DecodedTokenGoogle;
       let getUserSQL = "";
-      console.log("USER", tokenData.user);
+      console.log("USER", tokenData);
 
-      if (tokenData.user.includes("@")) {
-        getUserSQL = `SELECT * FROM users WHERE email = $1`;
+      if ("locale" in tokenData) {
+        const tokenUser = tokenData;
+
+        return res.status(200).json({
+          message: "Authorized",
+          tokenUser,
+          tokenData,
+        });
       } else {
-        getUserSQL = `SELECT * FROM users WHERE username = $1`;
+        if (tokenData.user.includes("@")) {
+          // For normal login
+          getUserSQL = `SELECT * FROM users WHERE email = $1`;
+        } else {
+          getUserSQL = `SELECT * FROM users WHERE username = $1`;
+        }
+        const getUser = await pool.query(getUserSQL, [tokenData.user]);
+        const tokenUser = getUser.rows[0] as User;
+
+        // console.log("TOKEN USER", tokenUser);
+
+        return res.status(200).json({
+          message: "Authorized",
+          tokenUser,
+          tokenData,
+        });
       }
-
-      const getUser = await pool.query(getUserSQL, [tokenData.user]);
-      const tokenUser = getUser.rows[0] as User;
-
-      // console.log("TOKEN USER", tokenUser);
-
-      return res.status(200).json({
-        message: "Authorized",
-        tokenUser,
-        tokenData,
-      });
     });
   }
   return undefined;
