@@ -3,8 +3,11 @@
 - move login from userservice -> authservice
 - oauths server side
 - link fb / google accounts to profile
-- - select field for normal / google / fb
-- - public/friends/hidden tick
+
+  - select field for normal / google / fb
+  - public/friends/hidden tick
+
+- on logout remove google/fb stuff also
 
 ## Facebook SDK
 
