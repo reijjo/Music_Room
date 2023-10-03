@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import {
   DecodedToken,
+  DecodedTokenFb,
   DecodedTokenGoogle,
   FullUserData,
   LoginCredentials,
@@ -257,18 +258,20 @@ usersRouter.get("/token", (req: Request, res: Response) => {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
-      const tokenData = decoded as DecodedToken | DecodedTokenGoogle;
+      const tokenData = decoded as
+        | DecodedToken
+        | DecodedTokenGoogle
+        | DecodedTokenFb;
       let getUserSQL = "";
       console.log("USER", tokenData);
 
       // Google user
 
       if ("locale" in tokenData) {
-        const tokenUser = tokenData;
+        const tokenUser = { ...tokenData, loginStyle: "google" };
 
         getUserSQL = `SELECT * FROM google_users WHERE username = $1`;
         const getGoogleUser = await pool.query(getUserSQL, [tokenUser.name]);
-        // const googleUser = getGoogleUser.rows[0] as GoogleUser;
 
         if (getGoogleUser.rowCount < 1) {
           try {
@@ -288,6 +291,34 @@ usersRouter.get("/token", (req: Request, res: Response) => {
           tokenUser,
           tokenData,
         });
+      } else if ("short_name" in tokenData) {
+        // For fb login
+
+        const tokenUser = { ...tokenData, loginStyle: "facebook" };
+
+        console.log("token user", tokenUser.picture);
+
+        getUserSQL = `SELECT * FROM facebook_users WHERE username = $1`;
+        const getFbUser = await pool.query(getUserSQL, [tokenUser.name]);
+
+        if (getFbUser.rowCount < 1) {
+          try {
+            const fbUserSql = `INSERT INTO facebook_users (facebook_id, username, picture) VALUES ($1, $2, $3)`;
+            await pool.query(fbUserSql, [
+              tokenUser.id,
+              tokenUser.name,
+              tokenUser.picture.data.url,
+            ]);
+          } catch (error) {
+            console.log("Error adding fb user to database", error);
+          }
+        }
+
+        return res.status(200).json({
+          message: "Authorized",
+          tokenData,
+          tokenUser,
+        });
       } else {
         // For normal login
 
@@ -297,7 +328,8 @@ usersRouter.get("/token", (req: Request, res: Response) => {
           getUserSQL = `SELECT * FROM users WHERE username = $1`;
         }
         const getUser = await pool.query(getUserSQL, [tokenData.user]);
-        const tokenUser = getUser.rows[0] as User;
+        const getUserResult = getUser.rows[0] as User;
+        const tokenUser = { ...getUserResult, loginStyle: "normal" };
 
         // console.log("TOKEN USER", tokenUser);
 

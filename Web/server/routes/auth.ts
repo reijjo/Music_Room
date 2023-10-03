@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
-// import { pool } from "../utils/dbConnection";
 import jwt from "jsonwebtoken";
-// import passport from "passport";
-// import { Strategy as FacebookStrategy } from "passport-facebook";
 import { config } from "../utils/config";
-import { DecodedToken, GoogleTokenObj, GoogleUser } from "../utils/types";
+import {
+  DecodedToken,
+  FacebookUser,
+  GoogleTokenObj,
+  GoogleUser,
+} from "../utils/types";
 
 const authRouter = express.Router();
 
@@ -48,8 +50,6 @@ authRouter.post("/google/token", async (req: Request, res: Response) => {
   const tokenObj = (await req.body) as GoogleTokenObj;
   const token = tokenObj.access_token;
 
-  // const address = tokenObj.scope.split(" ")[3];
-  // const address = "https://www.googleapis.com/auth/userinfo.profile";
   const address: string = `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`;
 
   console.log("back token", token);
@@ -67,7 +67,7 @@ authRouter.post("/google/token", async (req: Request, res: Response) => {
     const userForToken = {
       id: data.id,
       email: data.email,
-      user: data.name,
+      username: data.name,
       name: data.name,
       given_name: data.given_name,
       family_name: data.family_name,
@@ -88,71 +88,26 @@ authRouter.post("/google/token", async (req: Request, res: Response) => {
   }
 });
 
-// oauth / passport facebook login
-// passport.use(
-//   new FacebookStrategy(
-//     {
-//       clientID: config.FB_APP_ID,
-//       clientSecret: config.FB_APP_SECRET,
-//       callbackURL: "http://localhost:3000/api/auth/facebook/callback",
-//     },
-//     () =>
-//       (
-//         accessToken: string,
-//         refreshToken: string,
-//         profile: Profile,
-//         callback: () => void
-//       ) => {
-//         console.log(accessToken, refreshToken, profile, callback);
-//       }
-//   )
-// );
-// passport.use(
-//   new FacebookStrategy(
-//     {
-//       clientID: config.FB_APP_ID,
-//       clientSecret: config.FB_APP_SECRET,
-//       callbackURL: "/facebook/callback",
-//     },
-//     function (accessToken, refreshToken, profile, cb) {
-//       // save the profile on the Database
-//       // Save the accessToken and refreshToken if you need to call facebook apis later on
-//       console.log(accessToken, refreshToken);
-//       return cb(null, profile);
-//     }
-//   )
-// );
+authRouter.post("/fb/token", async (req: Request, res: Response) => {
+  try {
+    const userInfo = (await req.body) as FacebookUser;
 
-// passport.serializeUser(function (user, cb) {
-//   cb(null, user);
-// });
+    const secret = config.JWT_SECRET as string;
+    const userForToken = {
+      id: userInfo.id,
+      username: userInfo.name,
+      name: userInfo.name,
+      short_name: userInfo.short_name,
+      picture: userInfo.picture,
+    };
+    const fbToken = jwt.sign(userForToken, secret, {
+      expiresIn: 60 * 120,
+    });
 
-// passport.deserializeUser(function (obj, cb) {
-//   cb(null, obj as object);
-// });
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-// authRouter.get("/facebook", passport.authenticate("facebook"));
-
-// authRouter.get(
-//   "/facebook/callback",
-//   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-//   passport.authenticate(
-//     "facebook",
-//     { failureRedirect: "/login" },
-//     () => (_req: Request, res: Response) => {
-//       res.redirect("/logged");
-//     }
-//   )
-// );
-// authRouter.get(
-//   "/facebook/callback",
-//   passport.authenticate("facebook", {
-//     failureRedirect: `${config.FRONTEND_HOST}/login`,
-//   }),
-//   (_req, res) => {
-//     res.send(`${config.FRONTEND_HOST}/logged`);
-//   }
-// );
+    res.status(200).send({ user: userInfo, fbToken });
+  } catch (error) {
+    console.log("Error on fb user", error);
+  }
+});
 
 export { authRouter };

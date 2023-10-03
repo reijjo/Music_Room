@@ -57,6 +57,13 @@ export interface DecodedTokenGoogle extends DecodedToken {
   locale: string;
 }
 
+export interface DecodedTokenFb extends DecodedToken {
+  name: string;
+  picture: { data: { url: string } };
+  short_name: string;
+  user: string;
+}
+
 export interface GoogleTokenObj {
   access_token: string;
   token_type: string;
@@ -75,6 +82,17 @@ export interface GoogleUser {
   family_name: string;
   picture: string;
   locale: string;
+}
+
+export interface FacebookUser {
+  id: string;
+  first_name: string;
+  last_name: string;
+  name: string;
+  // picture: object;
+  picture: { data: { url: string } };
+
+  short_name: string;
 }
 
 export interface ConfigType {

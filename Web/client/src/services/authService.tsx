@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GoogleTokenObj } from "../utils/types";
+import { FacebookUser, GoogleTokenObj } from "../utils/types";
 
 const baseUrl = "/api/auth";
 
@@ -31,6 +31,15 @@ const googleLogin = async (token: GoogleTokenObj) => {
   }
 };
 
-const authService = { refreshToken, googleLogin };
+const fbLogin = async (info: FacebookUser) => {
+  try {
+    const response = await axios.post(`${baseUrl}/fb/token`, info);
+    return response.data;
+  } catch (error) {
+    console.log("FB token stuff error", error);
+  }
+};
+
+const authService = { refreshToken, googleLogin, fbLogin };
 
 export default authService;

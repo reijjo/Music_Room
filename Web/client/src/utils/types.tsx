@@ -27,6 +27,8 @@ export interface FullUserData {
   gender: Gender;
   verifycode: string;
   user_status: string;
+  picture: string | { data: { url: string } };
+  loginStyle: string;
 }
 
 export type User = Omit<FullUserData, "passwd" | "verifycode">;
@@ -55,4 +57,13 @@ export interface GoogleTokenObj {
   scope: string;
   // authuser: string;
   prompt: string;
+}
+
+export interface FacebookUser {
+  id: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  picture: { data: { url: string } };
+  short_name: string;
 }

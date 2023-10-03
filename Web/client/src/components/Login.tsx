@@ -9,7 +9,12 @@ import showico from "../images/icons8-visibility.png";
 import MyButton from "./common/Button";
 import InputField from "./common/InputField";
 import MessageBanner from "./common/MessageBanner";
-import { GoogleTokenObj, LoginCredentials, MessageInfo } from "../utils/types";
+import {
+  FacebookUser,
+  GoogleTokenObj,
+  LoginCredentials,
+  MessageInfo,
+} from "../utils/types";
 import userService from "../services/userService";
 import authService from "../services/authService";
 // import authService from "../services/authService";
@@ -74,16 +79,6 @@ const Login = () => {
       };
 
       getResponse(token);
-      // fetch(`${address}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => console.log(data))
-      //   .catch((error) => {
-      //     console.log("Error getting user data from google", error);
-      //   });
     },
     onError: (error) => console.log("Google login error", error),
   });
@@ -98,8 +93,16 @@ const Login = () => {
               fields:
                 "id,name,first_name,last_name,short_name,email,picture,gender",
             },
-            function (response) {
-              console.log("FB API", response);
+            async function (response) {
+              const myInfo = (await response) as FacebookUser;
+
+              console.log("MY info", myInfo.picture.data);
+
+              const res = await authService.fbLogin(myInfo);
+              if (res.fbToken) {
+                localStorage.setItem("music-token", res.fbToken);
+                window.location.replace("/logged");
+              }
             }
           );
         } else {
