@@ -26,5 +26,4 @@ CREATE TABLE IF NOT EXISTS facebook_users (
 	username VARCHAR(255) NOT NULL,
 	picture VARCHAR(255) NOT NULL,
 	linked BOOLEAN DEFAULT false
-
 )

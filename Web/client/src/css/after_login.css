@@ -3,3 +3,71 @@
   background-color: aliceblue;
   /* padding: 3vh 2vw; */
 }
+
+.side-grid {
+  grid-area: grid-side;
+  border-right: 1px solid var(--primamid);
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primalight);
+}
+
+.nav-grid {
+  grid-area: grid-nav;
+  border-bottom: 1px solid var(--primamid);
+  height: 8vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1vw;
+  background-color: var(--background);
+}
+
+.search-icon {
+  margin-bottom: 2px;
+}
+.search-icon:hover {
+  cursor: pointer;
+}
+.search-input {
+  border: none;
+  background-color: var(--background);
+  padding: 6px 12px;
+  width: 30vw;
+  margin-left: 4px;
+  font-size: 16px;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.main-grid {
+  grid-area: grid-main;
+  /* border: 1px solid green; */
+  display: flex;
+  background-color: var(--background);
+}
+
+.footer-grid {
+  grid-area: grid-footer;
+  border-top: 1px solid var(--primamid);
+  height: 12vh;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--primalight);
+}
+
+.grid-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "grid-side grid-nav"
+    "grid-side grid-main"
+    "grid-footer grid-footer";
+}
