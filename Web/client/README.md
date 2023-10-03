@@ -1,7 +1,8 @@
 # TODO
 
 - move login from userservice -> authservice
-- oauths server side
+- oauths server side??
+- images backend
 - link fb / google accounts to profile
 
   - select field for normal / google / fb
