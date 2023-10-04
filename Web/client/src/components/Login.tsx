@@ -86,7 +86,15 @@ const Login = () => {
   const fbLogin = async () => {
     FB.login(
       function (response) {
+        console.log("FB LOGIN RESPONSE", response);
+        FB.getLoginStatus((response) => {
+          console.log("HIHUU", response);
+        });
         if (response.status === "connected") {
+          localStorage.setItem(
+            "facebook-token",
+            response.authResponse.accessToken
+          );
           FB.api(
             "/me",
             {
@@ -110,7 +118,7 @@ const Login = () => {
         }
         console.log("FB LOGIN", response);
       }
-      // { scope: "gender" }
+      // { scope: "email,user_friends" }
     );
 
     console.log("fb login res");

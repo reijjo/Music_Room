@@ -2,13 +2,9 @@ import { useState } from "react";
 import { User } from "../utils/types";
 
 import searchIco from "../images/icons8-search.svg";
-import { Link } from "react-router-dom";
-import SideGrid from "./grid-sections/SideGrid";
-import FooterGrid from "./grid-sections/FooterGrid";
-import MainGrid from "./grid-sections/MainGrid";
 import NavGrid from "./grid-sections/NavGrid";
 
-const Logged = ({ user }: { user: User }) => {
+const Settings = ({ user }: { user: User }) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   let pictureUrl;
@@ -18,14 +14,34 @@ const Logged = ({ user }: { user: User }) => {
     pictureUrl = user.picture;
   }
 
-  console.log("user", user);
-  console.log("picture url", pictureUrl);
+  const userLogout = () => {
+    if (user.loginStyle === "google") {
+      console.log("logout google");
+    } else if (user.loginStyle === "facebook") {
+      localStorage.removeItem("music-token");
+      localStorage.removeItem("facebook-token");
+
+      const fbLogout = () => {
+        FB.getLoginStatus((response) => {
+          console.log("HIHUU", response);
+        });
+        FB.logout(function (response) {
+          localStorage.removeItem("facebook-token");
+          console.log("FB LOGOUT RESPO", response);
+        });
+      };
+      fbLogout();
+      console.log("logout facebook");
+      window.location.replace("/");
+    } else {
+      console.log("lets logout");
+    }
+  };
 
   return (
     <div id="logged">
       <div className="grid-container">
-        {/* <div className="side-grid">side</div> */}
-        <SideGrid />
+        <div className="side-grid">side</div>
         {/* <div className="nav-grid">
           <div style={{ display: "flex", alignItems: "center" }}>
             <img
@@ -52,12 +68,10 @@ const Logged = ({ user }: { user: User }) => {
               <img src={pictureUrl} alt="user-image" className="user-image" />
               {settingsOpen && (
                 <div className="dropdown-user">
-                  <div className="dropdown-user-settings">
-                    <Link to="/settings" className="plain-link">
-                      Settings
-                    </Link>
-                  </div>
+                  <div className="dropdown-user-profile">My Profile</div>
+                  <div className="dropdown-user-settings">Settings</div>
                   <div
+                    onClick={userLogout}
                     className="dropdown-user-logout"
                     style={{ borderTop: "1px solid var(--text)" }}
                   >
@@ -69,16 +83,18 @@ const Logged = ({ user }: { user: User }) => {
           </div>
         </div> */}
         <NavGrid user={user} />
-        {/* <MainGrid /> */}
-        <div className="main-grid">main</div>
-        <FooterGrid />
-        {/* <div className="footer-grid">footer</div> */}
+        <div className="main-grid">
+          <div className="settings">
+            <h1>wohoo settings32323232</h1>
+          </div>
+        </div>
+        <div className="footer-grid">footer</div>
       </div>
       {/* <div>wohoo logged in</div>
-      <h2>{user.username}</h2>
-      <img src={pictureUrl} alt="user img" /> */}
+		<h2>{user.username}</h2>
+		<img src={pictureUrl} alt="user img" /> */}
     </div>
   );
 };
 
-export default Logged;
+export default Settings;

@@ -14,6 +14,7 @@ import MyButton from "./components/common/Button";
 import userService from "./services/userService";
 import authService from "./services/authService";
 import { DecodedToken } from "./utils/types";
+import Settings from "./components/Settings";
 // import RefreshToken from "./components/common/RefreshToken";
 
 const App = () => {
@@ -49,8 +50,10 @@ const App = () => {
     const verifiedToken = async (token: string) => {
       try {
         const res = await userService.getToken(token);
-        setUser(res.tokenUser);
-        setDecodedToken(res.tokenData);
+        if (res) {
+          setUser(res.tokenUser);
+          setDecodedToken(res.tokenData);
+        }
 
         console.log("Verifytoken res", res);
       } catch (error) {
@@ -131,6 +134,10 @@ const App = () => {
           <Route
             path="/logged"
             element={user ? <Logged user={user} /> : <Login />}
+          />
+          <Route
+            path="/settings"
+            element={user ? <Settings user={user} /> : <Login />}
           />
         </Routes>
         <Modal
