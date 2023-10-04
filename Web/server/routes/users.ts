@@ -333,6 +333,7 @@ usersRouter.get("/token", (req: Request, res: Response) => {
 
         // console.log("TOKEN USER", tokenUser);
 
+        // Send the userdata from database as user and token data as DecodedToken in App.tsx
         return res.status(200).json({
           message: "Authorized",
           tokenUser,

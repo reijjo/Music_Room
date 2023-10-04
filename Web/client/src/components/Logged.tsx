@@ -5,7 +5,7 @@ import searchIco from "../images/icons8-search.svg";
 import { Link } from "react-router-dom";
 import SideGrid from "./grid-sections/SideGrid";
 import FooterGrid from "./grid-sections/FooterGrid";
-import MainGrid from "./grid-sections/MainGrid";
+// import MainGrid from "./grid-sections/MainGrid";
 import NavGrid from "./grid-sections/NavGrid";
 
 const Logged = ({ user }: { user: User }) => {

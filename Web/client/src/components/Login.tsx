@@ -49,9 +49,12 @@ const Login = () => {
 
   const login = async (event: SyntheticEvent) => {
     event.preventDefault();
+
+    // Send the login data to database to sign jwt token
     const logging = await userService.logUser(logData);
     console.log("logdata", logging);
     if (logging.token) {
+      // Set the token with logindata
       localStorage.setItem("music-token", logging.token);
       window.location.replace("/logged");
     }
