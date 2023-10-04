@@ -2,8 +2,9 @@
 
 - move login from userservice -> authservice
 - oauths server side??
+- facebook oauth is a mess, -fix it at the end
 - images backend
-- link fb / google accounts to profile
+- link  google account to profile
 
   - select field for normal / google / fb
   - public/friends/hidden tick
