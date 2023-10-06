@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { User } from "../utils/types";
 
 // import searchIco from "../images/icons8-search.svg";
@@ -9,19 +9,35 @@ import MyButton from "./common/Button";
 import fbico from "../images/icons8-facebook.png";
 import googleico from "../images/icons8-google.png";
 
+// const RadioButton = (props) => {
+//   return (
+//     <div className="radio-button">
+//       <input
+//         type="radio"
+//         id={props.id}
+//         name={props.name}
+//         value={props.value}
+//         checked={props.checked}
+//         onChange={props.onChange}
+//       />
+//       <label htmlFor={props.id}>{props.text}</label>
+//     </div>
+//   );
+// };
+
 const Settings = ({ user }: { user: User }) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
 
   const [changeUsername, setChangeUsername] = useState(false);
-  const [changeEmail, setChangeEmail] = useState(false);
+  // const [changeEmail, setChangeEmail] = useState(false);
 
-  let pictureUrl;
-  if (typeof user.picture !== "string") {
-    pictureUrl = user.picture.data.url;
-  } else {
-    pictureUrl = user.picture;
-  }
+  // let pictureUrl;
+  // if (typeof user.picture !== "string") {
+  //   pictureUrl = user.picture.data.url;
+  // } else {
+  //   pictureUrl = user.picture;
+  // }
 
   console.log("changeUsername", changeUsername);
 
@@ -131,6 +147,14 @@ const Settings = ({ user }: { user: User }) => {
             {/* PICTURE */}
 
             <div>Change picture</div>
+            <hr
+              style={{
+                width: "80%",
+                border: "none",
+                height: "1px",
+                backgroundColor: "var(--text)",
+              }}
+            />
             {/* LINK ACCOUNTS */}
             <div
               className="oauth-logos"

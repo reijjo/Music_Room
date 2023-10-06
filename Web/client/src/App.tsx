@@ -44,34 +44,38 @@ const App = () => {
   };
 
   // Token verification
+
+  const verifiedToken = async (token: string) => {
+    try {
+      const res = await userService.getToken(token);
+      if (res) {
+        console.log("TOKEN RES");
+        setUser(res.tokenUser);
+        setDecodedToken(res.tokenData);
+      }
+
+      console.log("Verifytoken res", res);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data.message);
+      } else {
+        console.log("Error verifying token", error);
+      }
+      setToken(null);
+      setUser(null);
+      localStorage.removeItem("music-token");
+    }
+  };
+
   useEffect(() => {
     const storedToken = localStorage.getItem("music-token");
 
-    const verifiedToken = async (token: string) => {
-      try {
-        const res = await userService.getToken(token);
-        if (res) {
-          console.log("TOKEN RES");
-          setUser(res.tokenUser);
-          setDecodedToken(res.tokenData);
-        }
-
-        console.log("Verifytoken res", res);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.error(error.response?.data.message);
-        } else {
-          console.log("Error verifying token", error);
-        }
-        setToken(null);
-        setUser(null);
-        localStorage.removeItem("music-token");
-      }
-    };
-
     if (storedToken) {
       setToken(storedToken);
-      if (window.location.pathname === "/logged") {
+      if (
+        window.location.pathname === "/logged" ||
+        window.location.pathname === "/settings"
+      ) {
         verifiedToken(storedToken);
       }
     }

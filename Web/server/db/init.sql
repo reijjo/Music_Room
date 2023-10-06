@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS users (
 	gender VARCHAR(255) NOT NULL,
 	verifycode VARCHAR(255) NOT NULL,
 	user_status INTEGER DEFAULT 0 NOT NULL,
-	picture VARCHAR(255)
+	picture VARCHAR(255),
+	google_id VARCHAR(255) DEFAULT '0' NOT NULL,
+	facebook_id VARCHAR(255) DEFAULT '0' NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS google_users (
