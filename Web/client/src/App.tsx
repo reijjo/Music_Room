@@ -51,6 +51,7 @@ const App = () => {
       try {
         const res = await userService.getToken(token);
         if (res) {
+          console.log("TOKEN RES");
           setUser(res.tokenUser);
           setDecodedToken(res.tokenData);
         }
@@ -139,7 +140,11 @@ const App = () => {
             path="/settings"
             element={user ? <Settings user={user} /> : <Login />}
           />
+          <Route path="*" element={<Homepage />} />
         </Routes>
+
+        {/* Token going to expire */}
+
         <Modal
           style={customStyles}
           isOpen={showTokenRefresh}

@@ -12,7 +12,7 @@ const authRouter = express.Router();
 
 authRouter.get("/refresh-token", (req: Request, res: Response) => {
   const secret = config.JWT_SECRET;
-  console.log("secret", secret);
+  // console.log("secret", secret);
 
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -29,7 +29,7 @@ authRouter.get("/refresh-token", (req: Request, res: Response) => {
       }
 
       const oldTokenData = decoded as DecodedToken;
-      console.log("USER AUTH AUTH AUTH", oldTokenData);
+      // console.log("USER AUTH AUTH AUTH", oldTokenData);
 
       const newTokenData = {
         id: oldTokenData.id,
@@ -52,8 +52,8 @@ authRouter.post("/google/token", async (req: Request, res: Response) => {
 
   const address: string = `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`;
 
-  console.log("back token", token);
-  console.log("back address", address);
+  // console.log("back token", token);
+  // console.log("back address", address);
 
   try {
     const result = await fetch(address, {
@@ -63,6 +63,7 @@ authRouter.post("/google/token", async (req: Request, res: Response) => {
     });
 
     const data: GoogleUser = (await result.json()) as GoogleUser;
+
     const secret = config.JWT_SECRET as string;
     const userForToken = {
       id: data.id,
@@ -81,7 +82,7 @@ authRouter.post("/google/token", async (req: Request, res: Response) => {
       expiresIn: 60 * 120,
     });
 
-    console.log("back result", data);
+    // console.log("back result", data, googleToken);
     res.status(200).send({ user: data, googleToken });
   } catch (error) {
     console.log("Error fetching Google user", error);

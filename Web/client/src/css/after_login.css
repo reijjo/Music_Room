@@ -143,8 +143,28 @@
 
 .settings {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
   align-items: center;
   height: 100%;
   width: 100%;
+  color: var(--text);
+}
+
+.settings > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  width: 80%;
+  max-width: 400px;
+}
+
+.flex-input {
+  flex-grow: 1;
+}
+
+.input-change {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
 }

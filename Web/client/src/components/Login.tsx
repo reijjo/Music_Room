@@ -67,9 +67,6 @@ const Login = () => {
 
   const loginGoogle = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log("Google token respo", tokenResponse);
-      console.log("scope stuff", tokenResponse.scope.split(" ")[3]);
-
       const token = tokenResponse;
 
       const getResponse = async (token: GoogleTokenObj) => {

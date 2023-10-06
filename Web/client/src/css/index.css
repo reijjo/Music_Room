@@ -119,7 +119,7 @@ footer > div {
   border-radius: 5px;
   background-color: var(--white);
   font-weight: 600;
-  color: var(--text);
+  color: var(--primamid);
 }
 
 .filledButton:hover {

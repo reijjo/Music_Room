@@ -14,6 +14,8 @@ interface Props {
   onFocus?: () => void;
   onBlur?: () => void;
   maxLength?: number;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 const InputField = ({
@@ -30,6 +32,8 @@ const InputField = ({
   onFocus,
   onBlur,
   maxLength,
+  disabled,
+  readOnly,
 }: Props) => {
   return (
     <input
@@ -46,6 +50,8 @@ const InputField = ({
       onFocus={onFocus}
       onBlur={onBlur}
       maxLength={maxLength}
+      disabled={disabled}
+      readOnly={readOnly}
     />
   );
 };

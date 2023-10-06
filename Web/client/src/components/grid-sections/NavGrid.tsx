@@ -17,6 +17,8 @@ const NavGrid = ({ user }: { user: User }) => {
   const userLogout = () => {
     if (user.loginStyle === "google") {
       console.log("logout google");
+      localStorage.removeItem("music-token");
+      window.location.replace("/");
     } else if (user.loginStyle === "facebook") {
       localStorage.removeItem("music-token");
       localStorage.removeItem("facebook-token");
@@ -47,7 +49,11 @@ const NavGrid = ({ user }: { user: User }) => {
           height="20px"
           onClick={() => console.log("search")}
         />
-        <input className="search-input" placeholder="Search" />
+        <input
+          className="search-input"
+          placeholder="Search"
+          name="search-bar"
+        />
       </div>
       <div className="dropdowns">
         <div className="user-notifications">notif</div>{" "}
@@ -64,7 +70,11 @@ const NavGrid = ({ user }: { user: User }) => {
           <img src={pictureUrl} alt="user-image" className="user-image" />
           {settingsOpen && (
             <div className="dropdown-user">
-              <div className="dropdown-user-profile">My Profile</div>
+              <div className="dropdown-user-profile">
+                <Link to="/logged" className="plain-link">
+                  My Profile
+                </Link>
+              </div>
               <div className="dropdown-user-settings">
                 {" "}
                 <Link to="/settings" className="plain-link">

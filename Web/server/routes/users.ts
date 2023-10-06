@@ -263,7 +263,8 @@ usersRouter.get("/token", (req: Request, res: Response) => {
         | DecodedTokenGoogle
         | DecodedTokenFb;
       let getUserSQL = "";
-      console.log("USER", tokenData);
+
+      // console.log("USER", tokenData);
 
       // Google user
 
@@ -296,7 +297,7 @@ usersRouter.get("/token", (req: Request, res: Response) => {
 
         const tokenUser = { ...tokenData, loginStyle: "facebook" };
 
-        console.log("token user", tokenUser.picture);
+        // console.log("token user", tokenUser.picture);
 
         getUserSQL = `SELECT * FROM facebook_users WHERE username = $1`;
         const getFbUser = await pool.query(getUserSQL, [tokenUser.name]);

@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "../utils/types";
 
-import searchIco from "../images/icons8-search.svg";
+// import searchIco from "../images/icons8-search.svg";
 import NavGrid from "./grid-sections/NavGrid";
+import InputField from "./common/InputField";
+import MyButton from "./common/Button";
+
+import fbico from "../images/icons8-facebook.png";
+import googleico from "../images/icons8-google.png";
 
 const Settings = ({ user }: { user: User }) => {
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+
+  const [changeUsername, setChangeUsername] = useState(false);
+  const [changeEmail, setChangeEmail] = useState(false);
 
   let pictureUrl;
   if (typeof user.picture !== "string") {
@@ -14,78 +23,139 @@ const Settings = ({ user }: { user: User }) => {
     pictureUrl = user.picture;
   }
 
-  const userLogout = () => {
-    if (user.loginStyle === "google") {
-      console.log("logout google");
-    } else if (user.loginStyle === "facebook") {
-      localStorage.removeItem("music-token");
-      localStorage.removeItem("facebook-token");
+  console.log("changeUsername", changeUsername);
 
-      const fbLogout = () => {
-        FB.getLoginStatus((response) => {
-          console.log("HIHUU", response);
-        });
-        FB.logout(function (response) {
-          localStorage.removeItem("facebook-token");
-          console.log("FB LOGOUT RESPO", response);
-        });
-      };
-      fbLogout();
-      console.log("logout facebook");
-      window.location.replace("/");
-    } else {
-      console.log("lets logout");
-    }
+  const handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setUsername(value);
   };
+
+  const cancelUsername = () => {
+    setUsername(user.username);
+    setChangeUsername(false);
+  };
+
+  console.log("USER", user);
 
   return (
     <div id="logged">
       <div className="grid-container">
         <div className="side-grid">side</div>
-        {/* <div className="nav-grid">
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <img
-              className="search-icon"
-              src={searchIco}
-              alt="search"
-              height="20px"
-              onClick={() => console.log("search")}
-            />
-            <input className="search-input" placeholder="Search" />
-          </div>
-          <div className="dropdowns">
-            <div className="user-notifications">notif</div>{" "}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                position: "relative",
-              }}
-              onClick={() => {
-                setSettingsOpen(!settingsOpen);
-              }}
-            >
-              <img src={pictureUrl} alt="user-image" className="user-image" />
-              {settingsOpen && (
-                <div className="dropdown-user">
-                  <div className="dropdown-user-profile">My Profile</div>
-                  <div className="dropdown-user-settings">Settings</div>
-                  <div
-                    onClick={userLogout}
-                    className="dropdown-user-logout"
-                    style={{ borderTop: "1px solid var(--text)" }}
-                  >
-                    Logout
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div> */}
         <NavGrid user={user} />
         <div className="main-grid">
           <div className="settings">
-            <h1>wohoo settings32323232</h1>
+            <h2>My info</h2>
+            {/* USERNAME */}
+
+            <div>
+              <label htmlFor="username">Username</label>
+              <div
+                className="input-change"
+                style={changeUsername ? { width: "calc(80% + 85px" } : {}}
+              >
+                <InputField
+                  className="reg-input flex-input"
+                  value={username}
+                  readOnly={!changeUsername}
+                  onChange={handleUsername}
+                />
+                <MyButton
+                  className={`myButton ${
+                    !changeUsername ? "outlinedButton" : "filledButton"
+                  }`}
+                  style={{ marginLeft: "4px", width: "80px" }}
+                  onClick={() => {
+                    !changeUsername
+                      ? setChangeUsername(true)
+                      : console.log("saved");
+                  }}
+                >
+                  {!changeUsername ? "Change" : "Save"}
+                </MyButton>
+                {changeUsername && (
+                  <MyButton
+                    className="myButton outlinedButton"
+                    onClick={cancelUsername}
+                  >
+                    Cancel
+                  </MyButton>
+                )}
+              </div>
+            </div>
+            {/* EMAIL */}
+
+            <div>
+              <label htmlFor="email">Email</label>
+              <div className="input-change">
+                <InputField
+                  className="reg-input flex-input"
+                  value={email}
+                  readOnly
+                />
+                <MyButton
+                  className="myButton outlinedButton"
+                  style={{ marginLeft: "4px", width: "80px" }}
+                >
+                  Change
+                </MyButton>
+              </div>
+            </div>
+            {/* AGE */}
+
+            <div>
+              <label htmlFor="age">Age</label>
+              <div className="input-change">
+                <InputField className="reg-input flex-input" readOnly />
+                <MyButton
+                  className="myButton outlinedButton"
+                  style={{ marginLeft: "4px", width: "80px" }}
+                >
+                  Change
+                </MyButton>
+              </div>
+            </div>
+            {/* GENDER */}
+
+            <div>
+              <label htmlFor="gender">Gender</label>
+              <div className="input-change">
+                <InputField className="reg-input flex-input" readOnly />
+                <MyButton
+                  className="myButton outlinedButton"
+                  style={{ marginLeft: "4px", width: "80px" }}
+                >
+                  Change
+                </MyButton>
+              </div>
+            </div>
+            {/* PICTURE */}
+
+            <div>Change picture</div>
+            {/* LINK ACCOUNTS */}
+            <div
+              className="oauth-logos"
+              style={{ flexDirection: "row", justifyContent: "flex-start" }}
+            >
+              <div
+                onClick={() => console.log("link fb")}
+                style={{ minWidth: "min-content" }}
+              >
+                <img src={fbico} alt="oauth" title="facebook" />
+                <div style={{ whiteSpace: "nowrap" }}>
+                  Connect with Facebook
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  console.log("link google");
+                  // loginGoogle();
+                }}
+                style={{ minWidth: "min-content" }}
+              >
+                <img src={googleico} alt="oauth" title="facebook" />
+                <div style={{ whiteSpace: "nowrap" }}>Connect with Google</div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="footer-grid">footer</div>
