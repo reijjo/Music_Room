@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "musicroom",
+      "Group": "Server Group 1",
+      "Port": 5432,
+      "Username": "reijjo",
+      "Host": "db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "musicroom"
+    }
+  }
+}
