@@ -1,0 +1,65 @@
+/* Landing -page */
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+  flex-grow: 1;
+  padding: 8vh 0;
+}
+
+.deezer-stuff {
+  max-width: 600px;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-end;
+  padding: 12px;
+  /* margin-right: 40%; */
+  margin-bottom: -75px;
+}
+
+.deezer-stuff > img {
+  height: 30px;
+  z-index: 1;
+}
+
+.big-logo {
+  height: 300px;
+  max-width: 800px;
+  width: 80%;
+  background-image: url(../images/cas.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transform: rotate(-20deg);
+}
+
+.big-logo-text {
+  font-family: "MilgranItalic";
+  font-size: 6rem;
+  text-shadow: 6px 6px 4px rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  /* color: var(--primarylight); */
+  transform: rotate(20deg);
+  -webkit-text-stroke: 2px var(--bg);
+
+  /* WEIRD LOOKING GRADIENT */
+  /* font-family: "MilgranRegular"; */
+  /* background: linear-gradient(
+    90deg,
+    var(--text) 13.28%,
+    var(--secondary) 48.41%
+  ); */
+  /* -webkit-background-clip: text; */
+  /* background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+}

@@ -1,0 +1,93 @@
+:root {
+  --eka: #1e2d40;
+  --toka: #2e5159;
+  --kolmas: #f2e4bb;
+  --neljas: #f2a88d;
+  --viides: #f28177;
+
+  --white: #f5f5f5;
+  --black: #111111;
+  --success: #50d050;
+  --warn: #ffcb76;
+  --error: #ff4b4b;
+
+  --primary: #2e5159;
+  --primarymid: hsl(191, 32%, 40%);
+  --primarylight: #9ac2cb;
+  --secondary: #f2a88d;
+  --secondary2: #f28177;
+
+  --bg: hsl(191, 32%, 10%);
+  --text: hsl(191, 32%, 90%);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", "Jost", "Rolling", "RollingItalic", "Bellada",
+    "MilgranRegular", "MilgranItalic", sans-serif;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.wrapper {
+  min-height: 100vh;
+  /* min-height: calc(100vh - 10vh); */
+  /* height: 100%; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  background-image: url("../images/desktop.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+
+  /* THIS IS EXTRA??? */
+  /* position: relative;
+  overflow: hidden;
+  padding-top: 8vh;
+  padding-bottom: 8vh; */
+}
+
+/* NAV & FOOTER */
+nav,
+footer {
+  height: 8vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary);
+  z-index: 1;
+}
+
+nav {
+  border-bottom: 1px solid var(--secondary2);
+  position: sticky;
+  top: 0;
+}
+
+nav > div {
+  margin: 0 8px;
+}
+
+.nav-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+footer {
+  border-top: 1px solid var(--secondary2);
+  /* position: sticky; */
+  bottom: 0;
+}
+
+footer > div {
+  margin: 0 8px;
+}
