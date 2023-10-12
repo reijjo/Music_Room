@@ -1,4 +1,4 @@
-import deez from "../assets/images/deezerlogos/Logotype/DIGITAL RGB/PNG/Colored_Full_White@2x.png";
+import deez from "../../assets/images/deezerlogos/Logotype/DIGITAL RGB/PNG/Colored_Full_White@2x.png";
 
 const Landing = () => {
   return (

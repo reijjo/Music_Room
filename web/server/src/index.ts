@@ -6,8 +6,6 @@ app.get("/ping", (_req, res) => {
   res.send("pong");
 });
 
-console.log("CONFING", config);
-
 app.listen(config.PORT, () => {
   console.log(`Server running on port ${config.PORT}`);
 });
