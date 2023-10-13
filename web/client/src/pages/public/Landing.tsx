@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import deez from "../../assets/images/deezerlogos/Logotype/DIGITAL RGB/PNG/Colored_Full_White@2x.png";
+import MyButton from "../../components/MyButton";
 
 const Landing = () => {
   return (
@@ -12,6 +14,21 @@ const Landing = () => {
         <div style={{ transform: "rotate(20deg" }}>
           The place where you can stream music like a maniac.
         </div>
+      </div>
+      <div>
+        <Link to="/register">
+          <MyButton
+            className="my-button text-button"
+            style={{
+              padding: "0",
+              margin: "0",
+              fontSize: "inherit",
+              // textDecoration: "underline",
+            }}
+          >
+            Click here to get started!
+          </MyButton>
+        </Link>
       </div>
     </div>
   );
