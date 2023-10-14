@@ -182,3 +182,9 @@
 .label-input label {
   margin-left: 4px;
 }
+
+ul {
+  margin: 4px;
+  font-size: 0.8rem;
+  color: var(--warn);
+}

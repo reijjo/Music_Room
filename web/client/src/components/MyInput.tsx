@@ -1,17 +1,19 @@
-import { CSSProperties, ChangeEvent } from "react";
+import { CSSProperties, ChangeEvent, FocusEvent } from "react";
 
 interface Props {
-  className?: string;
   style?: CSSProperties;
+  className?: string;
   name?: string;
   id?: string;
   type?: string;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  autoComplete?: string;
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
-  value?: string;
-  autoComplete?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 }
 
 const MyInput = ({
@@ -21,6 +23,8 @@ const MyInput = ({
   id,
   type,
   onChange,
+  onFocus,
+  onBlur,
   disabled,
   readOnly,
   required,
@@ -35,6 +39,8 @@ const MyInput = ({
       id={id}
       type={type}
       onChange={onChange}
+      onFocus={onFocus}
+      onBlur={onBlur}
       disabled={disabled}
       readOnly={readOnly}
       required={required}
@@ -43,5 +49,5 @@ const MyInput = ({
     />
   );
 };
-1;
+
 export default MyInput;
