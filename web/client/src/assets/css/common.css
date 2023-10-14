@@ -157,6 +157,6 @@ footer > div {
   font-size: 1rem;
   font-family: inherit;
   border-radius: 5px;
-  width: 80vw;
-  max-width: 400px;
+  /* width: 80vw;
+  max-width: 400px; */
 }

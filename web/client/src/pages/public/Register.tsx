@@ -131,7 +131,7 @@ const Register = () => {
     }
   };
 
-  const handleGender = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGender = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setGender(value);
   };
@@ -169,6 +169,8 @@ const Register = () => {
       gender
     );
   };
+
+  console.log("GENDER", gender);
 
   return (
     <div className="register-page">
@@ -341,101 +343,113 @@ const Register = () => {
           <div className="reg-fields">
             {/* USERNAME */}
 
-            <div className="label-input">
-              <label htmlFor="username">Username</label>
-              <MyInput
-                className="my-input"
-                type="text"
-                name="username"
-                id="username"
-                autoComplete="off"
-                value={username}
-                onChange={handleUsername}
-                onFocus={() => {
-                  setUsernameFocus(true);
-                }}
-                onBlur={() => {
-                  setUsernameFocus(false);
-                }}
-              />
-              {usernameFocus && (usernameLenMsg || usernameValidMsg) && (
-                <ul>
-                  {usernameLenMsg && <li>{usernameLenMsg}</li>}
-                  {usernameValidMsg && <li>{usernameValidMsg}</li>}
-                </ul>
-              )}
+            <div style={{ width: "80vw", maxWidth: "500px" }}>
+              <div className="label-input">
+                <label htmlFor="username">Username</label>
+                <MyInput
+                  className="my-input"
+                  type="text"
+                  name="username"
+                  id="username"
+                  autoComplete="off"
+                  value={username}
+                  onChange={handleUsername}
+                  onFocus={() => {
+                    setUsernameFocus(true);
+                  }}
+                  onBlur={() => {
+                    setUsernameFocus(false);
+                  }}
+                />
+                {usernameFocus && (usernameLenMsg || usernameValidMsg) && (
+                  <ul>
+                    {usernameLenMsg && <li>{usernameLenMsg}</li>}
+                    {usernameValidMsg && <li>{usernameValidMsg}</li>}
+                  </ul>
+                )}
+              </div>
             </div>
-
             {/* AGE */}
-
-            <div className="label-input">
-              <label htmlFor="age">Age</label>
-              <MyInput
-                className="my-input"
-                type="text"
-                name="age"
-                id="age"
-                autoComplete="off"
-                value={age}
-                onChange={handleAge}
-                onFocus={() => {
-                  setAgeFocus(true);
-                }}
-                onBlur={() => {
-                  setAgeFocus(false);
-                }}
-              />
-              {ageFocus && (ageValidMsg || ageYoungMsg || ageOldMsg) && (
-                <ul>
-                  {ageValidMsg && <li>{ageValidMsg}</li>}
-                  {ageYoungMsg && <li>{ageYoungMsg}</li>}
-                  {ageOldMsg && <li>{ageOldMsg}</li>}
-                </ul>
-              )}
+            <div style={{ width: "80vw", maxWidth: "500px" }}>
+              <div className="label-input">
+                <label htmlFor="age">Age</label>
+                <MyInput
+                  className="my-input"
+                  type="text"
+                  name="age"
+                  id="age"
+                  autoComplete="off"
+                  value={age}
+                  onChange={handleAge}
+                  onFocus={() => {
+                    setAgeFocus(true);
+                  }}
+                  onBlur={() => {
+                    setAgeFocus(false);
+                  }}
+                />
+                {ageFocus && (ageValidMsg || ageYoungMsg || ageOldMsg) && (
+                  <ul>
+                    {ageValidMsg && <li>{ageValidMsg}</li>}
+                    {ageYoungMsg && <li>{ageYoungMsg}</li>}
+                    {ageOldMsg && <li>{ageOldMsg}</li>}
+                  </ul>
+                )}
+              </div>
             </div>
-
             {/* GENDER */}
-
-            <div className="label-input">
-              <label htmlFor="gender">Gender</label>
-              <MyInput
-                className="my-input"
-                type="text"
-                name="gender"
-                id="gender"
-                onChange={handleGender}
-                value={gender}
-              />
+            <div style={{ width: "80vw", maxWidth: "500px" }}>
+              <div className="label-input">
+                <label htmlFor="gender">Gender</label>
+                <select
+                  value={gender}
+                  onChange={handleGender}
+                  className="my-input"
+                  id="gender"
+                >
+                  <option value="select">Select gender:</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
             </div>
 
-            <div
-              className="label-input"
-              style={{ width: "440px", flexDirection: "row" }}
-            >
-              <MyButton
-                className="my-button outlined-button"
-                type="button"
-                style={{
-                  width: "50%",
-                  padding: "0.5rem 1rem",
-                  fontSize: "1rem",
-                }}
-                onClick={toPrevStep}
+            <div style={{ width: "80vw", maxWidth: "500px" }}>
+              <div
+                className="label-input"
+                // style={{ width: "440px", flexDirection: "row" }}
               >
-                Back
-              </MyButton>
-              <MyButton
-                className="my-button filled-button"
-                type="button"
-                style={{
-                  width: "50%",
-                  padding: "0.5rem 1rem",
-                  fontSize: "1rem",
-                }}
-                onClick={toNextStep}
-              >
-                Next
-              </MyButton>
+                <div
+                  className="my-input"
+                  style={{ display: "flex", flexDirection: "row" }}
+                >
+                  <MyButton
+                    className="my-button outlined-button"
+                    type="button"
+                    style={{
+                      width: "50%",
+                      padding: "0.5rem 1rem",
+                      fontSize: "1rem",
+                    }}
+                    onClick={toPrevStep}
+                  >
+                    Back
+                  </MyButton>
+                  <MyButton
+                    className="my-button filled-button"
+                    type="button"
+                    style={{
+                      width: "50%",
+                      padding: "0.5rem 1rem",
+                      fontSize: "1rem",
+                    }}
+                    onClick={toNextStep}
+                  >
+                    Next
+                  </MyButton>
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -459,10 +473,7 @@ const Register = () => {
                 autoComplete="off"
               />
             </div>
-            {/* <div className="label-input">
-              <label htmlFor="passwd">Password</label>
-              <MyInput className="my-input" type="text" name="passwd" />
-            </div> */}
+
             <div className="label-input">
               <label htmlFor="username">Username</label>
               <MyInput
