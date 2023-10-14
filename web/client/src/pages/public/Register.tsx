@@ -20,9 +20,45 @@ const Register = () => {
     setEmail(value);
   };
 
+  const handlePasswd = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setPasswd(value);
+  };
+
+  const handlePasswd2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setPasswd2(value);
+  };
+
+  const handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setUsername(value);
+  };
+
+  const handleAge = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setAge(value);
+  };
+
+  const handleGender = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setGender(value);
+  };
+
   const toNextStep = () => {
-    // event.preventDefault();
-    setStep(step + 1);
+    if (
+      step === 1 &&
+      (email.trim() === "" || passwd.trim() === "" || passwd2.trim() === "")
+    ) {
+      console.log("No empty fields u fucker.");
+    } else if (
+      step === 2 &&
+      (username.trim() === "" || age.trim() === "" || gender.trim() === "")
+    ) {
+      console.log("No empty fields u fucker2.");
+    } else {
+      setStep(step + 1);
+    }
   };
 
   const toPrevStep = () => {
@@ -32,16 +68,22 @@ const Register = () => {
 
   const finishRegister = (event: FormEvent) => {
     event.preventDefault();
-    console.log("Okay this is me", email, passwd, username, age, gender);
+    console.log(
+      "Okay this is me",
+      email,
+      passwd,
+      passwd2,
+      username,
+      age,
+      gender
+    );
   };
 
   return (
     <div className="register-page">
       <h1 style={{ fontFamily: "MilgranRegular" }}>Registration</h1>
 
-      {step === 2 ? (
-        <h2>Everything correct?</h2>
-      ) : (
+      {step === 0 && (
         <div className="got-account">
           <div style={{ color: "var(--primarylight)" }}>
             Already got an account?{" "}
@@ -71,6 +113,13 @@ const Register = () => {
           <div className="div-with-line">
             <span>or</span>
           </div>
+          <MyButton
+            className="my-button filled-button"
+            style={{ padding: "0.5rem 1rem" }}
+            onClick={toNextStep}
+          >
+            Register with email
+          </MyButton>
         </div>
       )}
 
@@ -78,86 +127,128 @@ const Register = () => {
 
       {/* Step 0 */}
 
-      {step === 0 && (
-        // <form
-        //   style={{ width: "100%" }}
-        //   onSubmit={(event) => {
-        //     event.preventDefault();
-        //     console.log("SOME FORM ACTION from step 0!");
-        //   }}
-        //   // onSubmit={finishRegister}
-        // >
-        <div className="reg-fields">
-          <div className="label-input">
-            <label htmlFor="email">Email</label>
-            <MyInput
-              className="my-input"
-              type="text"
-              name="email"
-              id="email"
-              onChange={handleEmail}
-            />
-          </div>
-          <div className="label-input">
-            <label htmlFor="passwd">Password</label>
-            <MyInput
-              className="my-input"
-              type="text"
-              name="passwd"
-              id="passwd"
-              onChange={handleEmail}
-            />
-          </div>
-          <div className="label-input">
-            <label htmlFor="passwd2">Confirm Password</label>
-            <MyInput
-              className="my-input"
-              type="text"
-              name="passwd2"
-              id="passwd2"
-            />
-          </div>
+      {step === 1 && (
+        <form style={{ width: "100%" }}>
+          <div className="reg-fields">
+            {/* EMAIL */}
 
-          <div className="label-input">
-            <MyButton
-              className="my-button filled-button"
-              type="button"
-              style={{
-                width: "436px",
-                padding: "0.5rem 1rem",
-                fontSize: "1rem",
-              }}
-              onClick={toNextStep}
+            <div className="label-input">
+              <label htmlFor="email">Email</label>
+              <MyInput
+                className="my-input"
+                type="email"
+                name="email"
+                id="email"
+                value={email}
+                required
+                onChange={handleEmail}
+              />
+            </div>
+
+            {/* PASSWORD */}
+
+            <div className="label-input">
+              <label htmlFor="passwd">Password</label>
+              <MyInput
+                className="my-input"
+                type="password"
+                name="passwd"
+                id="passwd"
+                onChange={handlePasswd}
+                autoComplete="off"
+                value={passwd}
+              />
+            </div>
+
+            {/* PASSWORD 2 */}
+
+            <div className="label-input">
+              <label htmlFor="passwd2">Confirm Password</label>
+              <MyInput
+                className="my-input"
+                type="text"
+                name="passwd2"
+                id="passwd2"
+                onChange={handlePasswd2}
+                autoComplete="off"
+                value={passwd2}
+              />
+            </div>
+
+            <div
+              className="label-input"
+              style={{ width: "440px", flexDirection: "row" }}
             >
-              Next
-            </MyButton>
+              <MyButton
+                className="my-button outlined-button"
+                type="button"
+                style={{
+                  width: "50%",
+                  padding: "0.5rem 1rem",
+                  fontSize: "1rem",
+                }}
+                onClick={toPrevStep}
+              >
+                Back
+              </MyButton>
+              <MyButton
+                className="my-button filled-button"
+                type="button"
+                style={{
+                  width: "50%",
+                  padding: "0.5rem 1rem",
+                  fontSize: "1rem",
+                }}
+                onClick={toNextStep}
+              >
+                Next
+              </MyButton>
+            </div>
           </div>
-        </div>
-        // </form>
+        </form>
       )}
 
       {/* Step 1 */}
 
-      {step === 1 && (
-        // <form
-        //   style={{ width: "100%" }}
-        //   onSubmit={(event) => {
-        //     event.preventDefault();
-        //     console.log("SOME FORM ACTION from step 1!");
-        //   }}
-        // >
+      {step === 2 && (
         <div className="reg-fields">
+          {/* USERNAME */}
+
           <div className="label-input">
             <label htmlFor="username">Username</label>
-            <MyInput className="my-input" type="text" name="username" />
+            <MyInput
+              className="my-input"
+              type="text"
+              name="username"
+              onChange={handleUsername}
+              value={username}
+            />
           </div>
+
+          {/* AGE */}
+
           <div className="label-input">
             <label htmlFor="age">Age</label>
-            <MyInput className="my-input" type="text" name="age" />
+            <MyInput
+              className="my-input"
+              type="text"
+              name="age"
+              onChange={handleAge}
+              value={age}
+            />
           </div>
+
+          {/* GENDER */}
+
           <div className="label-input">
             <label htmlFor="gender">Gender</label>
-            <MyInput className="my-input" type="text" name="gender" />
+            <MyInput
+              className="my-input"
+              type="text"
+              name="gender"
+              onChange={handleGender}
+              value={gender}
+            />
           </div>
 
           <div
@@ -168,7 +259,7 @@ const Register = () => {
               className="my-button outlined-button"
               type="button"
               style={{
-                width: "30%",
+                width: "50%",
                 padding: "0.5rem 1rem",
                 fontSize: "1rem",
               }}
@@ -180,7 +271,7 @@ const Register = () => {
               className="my-button filled-button"
               type="button"
               style={{
-                width: "70%",
+                width: "50%",
                 padding: "0.5rem 1rem",
                 fontSize: "1rem",
               }}
@@ -195,10 +286,10 @@ const Register = () => {
 
       {/* Step 2 */}
 
-      {step === 2 && (
+      {step === 3 && (
         <form style={{ width: "100%" }} onSubmit={finishRegister}>
           <div className="reg-fields">
-            {/* <h2>Everything correct?</h2> */}
+            <h2>Everything correct?</h2>
             <div className="label-input">
               <label htmlFor="email">Email</label>
               <MyInput
@@ -215,15 +306,33 @@ const Register = () => {
             </div> */}
             <div className="label-input">
               <label htmlFor="username">Username</label>
-              <MyInput className="my-input" type="text" name="username" />
+              <MyInput
+                className="my-input"
+                type="text"
+                name="username"
+                value={username}
+                readOnly
+              />
             </div>
             <div className="label-input">
               <label htmlFor="age">Age</label>
-              <MyInput className="my-input" type="text" name="age" />
+              <MyInput
+                className="my-input"
+                type="text"
+                name="age"
+                value={age}
+                readOnly
+              />
             </div>
             <div className="label-input">
               <label htmlFor="gender">Gender</label>
-              <MyInput className="my-input" type="text" name="gender" />
+              <MyInput
+                className="my-input"
+                type="text"
+                name="gender"
+                value={gender}
+                readOnly
+              />
             </div>
             <div
               className="label-input"
@@ -233,7 +342,7 @@ const Register = () => {
                 className="my-button outlined-button"
                 type="button"
                 style={{
-                  width: "30%",
+                  width: "50%",
                   padding: "0.5rem 1rem",
                   fontSize: "1rem",
                 }}
@@ -244,7 +353,7 @@ const Register = () => {
               <MyButton
                 className="my-button filled-button"
                 style={{
-                  width: "70%",
+                  width: "50%",
                   padding: "0.5rem 1rem",
                   fontSize: "1rem",
                 }}
