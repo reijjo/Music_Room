@@ -1,6 +1,6 @@
 // REGISTER.TSX
 
-export type Gender = "" | "male" | "female" | "other";
+export type Gender = "select" | "Male" | "Female" | "Other";
 
 export interface UserData {
   email: string;
