@@ -168,7 +168,11 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  border: 1px solid lightblue;
+}
+
+.input-block {
+  width: 80vw;
+  max-width: 500px;
 }
 
 .label-input {
@@ -176,7 +180,7 @@
   flex-direction: column;
   padding: 1rem;
   font-size: 1rem;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 }
 
 .label-input label {
