@@ -1,6 +1,7 @@
 import MyInput from "../../../components/MyInput";
 import MyButton from "../../../components/MyButton";
-import { FormErrors, FormFocus, UserData } from "../../../utils/types";
+import InfoMessage from "../../../components/InfoMessage";
+import { FormErrors, FormFocus, UserData, InfoMsg } from "../../../utils/types";
 
 interface Props {
   userData: UserData;
@@ -11,6 +12,7 @@ interface Props {
   formErrors: FormErrors;
   toPrevStep: () => void;
   toNextStep: () => void;
+  infoMsg: InfoMsg;
 }
 
 const Step1 = ({
@@ -22,6 +24,7 @@ const Step1 = ({
   formErrors,
   toPrevStep,
   toNextStep,
+  infoMsg,
 }: Props) => {
   return (
     <form style={{ width: "100%" }}>
@@ -121,6 +124,8 @@ const Step1 = ({
             )}
           </div>
         </div>
+
+        <InfoMessage {...infoMsg} />
 
         {/* BUTTONS */}
 

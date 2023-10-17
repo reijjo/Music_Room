@@ -1,5 +1,13 @@
 import { FormEvent, useState } from "react";
-import { FormErrors, FormFocus, Gender, UserData } from "../../utils/types";
+
+import {
+  FormErrors,
+  FormFocus,
+  Gender,
+  UserData,
+  InfoMsg,
+} from "../../utils/types";
+import userService from "../../api/users";
 
 import Step0 from "./register/Step0";
 import Step1 from "./register/Step1";
@@ -18,7 +26,7 @@ const Register = () => {
     passwd2: "",
     username: "",
     age: "",
-    gender: "select",
+    gender: Gender.Select,
   });
   const [formErrors, setFormErrors] = useState<FormErrors>({
     email: {
@@ -218,15 +226,29 @@ const Register = () => {
       }));
     }
   };
+  const [infoMsg, setInfoMsg] = useState<InfoMsg>({
+    style: "",
+    message: "",
+  });
 
   const toNextStep = () => {
+    // Check for empty fields on Step1
+
     if (
       step === 1 &&
       (userData.email.trim() === "" ||
         userData.passwd.trim() === "" ||
         userData.passwd2.trim() === "")
     ) {
-      console.log("No empty fields u fucker.");
+      // Set error message if there is an empty field
+
+      setInfoMsg({
+        message: "Fill all the fields, thanks.",
+        style: "info-error",
+      });
+      setTimeout(() => {
+        setInfoMsg({ message: null });
+      }, 5000);
     } else if (
       step === 2 &&
       (userData.username.trim() === "" ||
@@ -235,8 +257,12 @@ const Register = () => {
           userData.gender !== "Female" &&
           userData.gender !== "Other"))
     ) {
-      console.log("No empty fields u fucker2.");
+      setInfoMsg({ message: "No empty fields!", style: "info-error" });
+      setTimeout(() => {
+        setInfoMsg({ message: null });
+      }, 5000);
     } else {
+      setInfoMsg({ message: null });
       setLastStep(true);
       setStep(step + 1);
     }
@@ -245,10 +271,19 @@ const Register = () => {
   const toPrevStep = () => {
     setLastStep(false);
     setStep(step - 1);
+    setInfoMsg({ message: null });
   };
 
   const finishRegister = (event: FormEvent) => {
     event.preventDefault();
+
+    const user = {
+      ...userData,
+    };
+
+    const res = userService.newUser(user);
+    console.log("New user response", res);
+
     console.log(
       "Okay this is me",
       userData.email,
@@ -260,9 +295,9 @@ const Register = () => {
     );
   };
 
-  console.log("GENDER", userData.gender);
-  console.log("LAST STEP", lastStep);
-  console.log("step", step);
+  // console.log("GENDER", userData.gender);
+  // console.log("LAST STEP", lastStep);
+  // console.log("step", step);
 
   return (
     <div className="register-page">
@@ -278,6 +313,7 @@ const Register = () => {
           formErrors={formErrors}
           toPrevStep={toPrevStep}
           toNextStep={toNextStep}
+          infoMsg={infoMsg}
         />
       )}
       {step === 2 && (
@@ -291,6 +327,7 @@ const Register = () => {
           toPrevStep={toPrevStep}
           toNextStep={toNextStep}
           handleSelect={handleSelect}
+          infoMsg={infoMsg}
         />
       )}
       {step === 3 && (

@@ -1,6 +1,7 @@
 import MyInput from "../../../components/MyInput";
 import MyButton from "../../../components/MyButton";
-import { FormErrors, FormFocus, UserData } from "../../../utils/types";
+import InfoMessage from "../../../components/InfoMessage";
+import { FormErrors, FormFocus, UserData, InfoMsg } from "../../../utils/types";
 
 interface Props {
   userData: UserData;
@@ -12,6 +13,7 @@ interface Props {
   toPrevStep: () => void;
   toNextStep: () => void;
   handleSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  infoMsg: InfoMsg;
 }
 
 const Step2 = ({
@@ -24,6 +26,7 @@ const Step2 = ({
   toPrevStep,
   toNextStep,
   handleSelect,
+  infoMsg,
 }: Props) => {
   return (
     <form style={{ width: "100%" }}>
@@ -103,13 +106,15 @@ const Step2 = ({
               name="gender"
               id="gender"
             >
-              <option value="select">Select gender:</option>
+              <option value="Select">Select gender:</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
           </div>
         </div>
+
+        <InfoMessage {...infoMsg} />
 
         {/* BUTTONS */}
 

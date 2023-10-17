@@ -1,6 +1,18 @@
-// REGISTER.TSX
+// ENUMS
 
-export type Gender = "select" | "Male" | "Female" | "Other";
+export enum Gender {
+  Select = "Select",
+  Male = "Male",
+  Female = "Female",
+  Other = "Other",
+}
+
+// INTERFACES
+
+export interface InfoMsg {
+  style?: string;
+  message?: string | null;
+}
 
 export interface UserData {
   email: string;
@@ -43,3 +55,20 @@ export interface FormFocus {
   username: boolean;
   age: boolean;
 }
+
+export interface UserFull {
+  id: number;
+  email: string;
+  passwd: string;
+  username: string;
+  age: string;
+  gender: Gender;
+  verifycode: string;
+  status: number;
+  facebook_id: number;
+  google_id: number;
+}
+
+// TYPES
+
+export type User = Omit<Omit<UserFull, "passwd">, "verifycode">;
