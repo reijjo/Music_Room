@@ -16,7 +16,6 @@ const getUsers = async () => {
 
 const newUser = async (newUser: UserData) => {
   try {
-    console.log("Axios new user", newUser);
     const res = await axios.post(baseUrl, newUser);
     console.log("res new user ", res.data);
     return res.data;

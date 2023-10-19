@@ -274,30 +274,60 @@ const Register = () => {
     setInfoMsg({ message: null });
   };
 
-  const finishRegister = (event: FormEvent) => {
+  const finishRegister = async (event: FormEvent) => {
     event.preventDefault();
 
-    const user = {
-      ...userData,
-    };
+    if (
+      formErrors.email.lenMsg ||
+      formErrors.email.validMsg ||
+      formErrors.username.lenMsg ||
+      formErrors.username.validMsg ||
+      formErrors.age.oldMsg ||
+      formErrors.age.validMsg ||
+      formErrors.age.youngMsg
+    ) {
+      setInfoMsg({
+        style: "info-error",
+        message: "Please fix the fields first.",
+      });
+      setTimeout(() => {
+        setInfoMsg({ message: null });
+      }, 5000);
+    } else {
+      const user = {
+        ...userData,
+      };
 
-    const res = userService.newUser(user);
-    console.log("New user response", res);
+      try {
+        const res = await userService.newUser(user);
+        console.log("New user response", res);
+        setInfoMsg({ message: res.message, style: res.style });
+        setTimeout(() => {
+          setInfoMsg({ message: null });
+        }, 5000);
+      } catch (error) {
+        setInfoMsg({
+          message: "Error while creating user. Please try again",
+          style: "info-error",
+        });
+        setTimeout(() => {
+          setInfoMsg({ message: null });
+        }, 5000);
+      }
 
-    console.log(
-      "Okay this is me",
-      userData.email,
-      userData.passwd,
-      userData.passwd2,
-      userData.username,
-      userData.age,
-      userData.gender
-    );
+      console.log(
+        "Okay this is me",
+        userData.email,
+        userData.passwd,
+        userData.passwd2,
+        userData.username,
+        userData.age,
+        userData.gender
+      );
+    }
   };
 
-  // console.log("GENDER", userData.gender);
-  // console.log("LAST STEP", lastStep);
-  // console.log("step", step);
+  console.log("INFO MSG", infoMsg);
 
   return (
     <div className="register-page">
@@ -337,6 +367,7 @@ const Register = () => {
           toPrevStep={toPrevStep}
           lastStep={lastStep}
           finishRegister={finishRegister}
+          infoMsg={infoMsg}
         />
       )}
     </div>

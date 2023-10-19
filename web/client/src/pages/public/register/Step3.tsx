@@ -1,6 +1,7 @@
 import MyInput from "../../../components/MyInput";
 import MyButton from "../../../components/MyButton";
-import { FormErrors, UserData } from "../../../utils/types";
+import InfoMessage from "../../../components/InfoMessage";
+import { FormErrors, InfoMsg, UserData } from "../../../utils/types";
 import { FormEvent } from "react";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
   toPrevStep: () => void;
   lastStep: boolean;
   finishRegister: (event: FormEvent) => void;
+  infoMsg: InfoMsg;
 }
 
 const Step3 = ({
@@ -17,6 +19,7 @@ const Step3 = ({
   toPrevStep,
   lastStep,
   finishRegister,
+  infoMsg,
 }: Props) => {
   return (
     <form style={{ width: "100%" }} onSubmit={finishRegister}>
@@ -127,6 +130,9 @@ const Step3 = ({
             />
           </div>
         </div>
+
+        <InfoMessage {...infoMsg} />
+
         <div className="input-block">
           <div className="label-input" style={{ flexDirection: "row" }}>
             <MyButton
