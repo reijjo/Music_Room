@@ -42,6 +42,8 @@ usersRouter.post(
       // console.log("verifycode", verifycode);
       // console.log("userstastat", userstatus);
 
+      // Add user to database
+
       const sql = `
       	INSERT INTO users (email, passwd, username, age, gender, verifycode, status)
       	VALUES ($1, $2, $3, $4, $5, $6, $7)`;

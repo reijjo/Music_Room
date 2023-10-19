@@ -24,10 +24,6 @@ services:
     restart: always
     env_file:
       - ./.env
-    #   environment:
-    #     POSTGRES_USER: myUsername
-    #     POSTGRES_PASSWORD: myPassword
-    #     POSTGRES_DB: myProject
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
@@ -40,8 +36,6 @@ services:
     env_file:
       - ./.env
     environment:
-      #     PGADMIN_DEFAULT_EMAIL: email@email.com
-      #     PGADMIN_DEFAULT_PASSWORD: myPassword
       GUNICORN_ACCESS_LOGFILE: "/dev/null"
     ports:
       - 8080:80

@@ -9,6 +9,14 @@ export const pool = new Pool({
   port: config.PGPORT,
 });
 
+// export const testPool = new Pool({
+//   user: config.POSTGRES_USER,
+//   host: config.PGHOST,
+//   database: config.TEST_POSTGRES_DB,
+//   password: config.PGADMIN_DEFAULT_PASSWORD,
+//   port: config.PGPORT,
+// });
+
 export const connectDB = () => {
   pool.connect((err, _client, _release) => {
     if (err) {

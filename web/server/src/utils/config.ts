@@ -11,6 +11,9 @@ const PGADMIN_DEFAULT_PASSWORD = process.env.PGADMIN_DEFAULT_PASSWORD;
 const PGHOST = process.env.PGHOST;
 const PGPORT: number = parseInt(process.env.PGPORT || "");
 
+// const TEST_POSTGRES_DB = process.env.TEST_POSTGRES_DB;
+// const TEST_PGHOST = process.env.TEST_PGHOST;
+
 export const config: DotenvConfig = {
   PORT,
   POSTGRES_USER,
@@ -18,4 +21,6 @@ export const config: DotenvConfig = {
   PGADMIN_DEFAULT_PASSWORD,
   PGHOST,
   PGPORT,
+  // TEST_POSTGRES_DB,
+  // TEST_PGHOST,
 };
