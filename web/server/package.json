@@ -41,9 +41,5 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.6",
     "pg": "^8.11.3"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "globalTeardown": "<rootDir>/src/tests/teardown.ts"
   }
 }

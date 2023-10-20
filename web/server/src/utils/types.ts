@@ -16,8 +16,9 @@ export interface DotenvConfig {
   PGADMIN_DEFAULT_PASSWORD?: string;
   PGHOST?: string;
   PGPORT?: number;
-  // TEST_POSTGRES_DB?: string;
-  // TEST_PGHOST?: string;
+  TEST_POSTGRES_DB?: string;
+  TEST_PGHOST?: string;
+  TEST_PGPORT?: number;
 }
 
 export interface UserFull {
