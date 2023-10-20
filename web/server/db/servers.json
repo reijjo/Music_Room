@@ -8,6 +8,15 @@
       "Host": "db",
       "SSLMode": "prefer",
       "MaintenanceDB": "musicroom"
+    },
+    "2": {
+      "Name": "test_musicroom",
+      "Group": "Server Group 1",
+      "Port": 5436,
+      "Username": "reijjo",
+      "Host": "test_db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "test_musicroom"
     }
   }
 }

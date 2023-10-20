@@ -6,10 +6,13 @@ services:
     container_name: SERVER_musicroom
     depends_on:
       - db
+      - test_db
     env_file:
       - ./.env
     environment:
-      WAIT_HOSTS: db:5432
+      # WAIT_HOSTS: db:5432
+      # WAIT_HOSTS: test_db:5436
+      WAIT_HOSTS: db:5432, test_db:5436
     ports:
       - 3001:3001
     volumes:
@@ -28,6 +31,21 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
+
+  test_db:
+    container_name: TEST_DB_musicroom
+    image: postgres
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      - PGHOST=test_db
+      - PGPORT=5436
+      - POSTGRES_DB=test_musicroom
+    volumes:
+      - ./db/test-init.sql:/docker-entrypoint-initdb.d/test-init.sql
+    ports:
+      - 5436:5432
 
   pgadmin:
     container_name: pgAdmin
