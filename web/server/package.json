@@ -8,7 +8,8 @@
     "dev": "ts-node-dev src/index.ts",
     "start": "node build/index.js",
     "lint": "eslint --ext .ts .",
-    "test": "jest --verbose"
+    "settest": "NODE=ENV=test jest --verbose",
+    "test": "docker exec -t SERVER_musicroom npm run settest"
   },
   "keywords": [],
   "author": "",

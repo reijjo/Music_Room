@@ -34,6 +34,11 @@ export interface UserFull {
   google_id: number;
 }
 
+export interface InfoMsg {
+  style?: string;
+  message?: string | null;
+}
+
 // TYPES
 
 export type User = Omit<Omit<UserFull, "passwd">, "verifycode">;
