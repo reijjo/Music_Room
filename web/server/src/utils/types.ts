@@ -25,6 +25,7 @@ export interface UserFull {
   id: number;
   email: string;
   passwd: string;
+  passwd2: string;
   username: string;
   age: string;
   gender: Gender;

@@ -155,6 +155,7 @@ const Step3 = ({
                 fontSize: "1rem",
               }}
               type="submit"
+              // disabled={formErrors.email.validMsg ? true : false}
             >
               Finish
             </MyButton>

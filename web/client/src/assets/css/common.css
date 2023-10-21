@@ -150,6 +150,14 @@ footer > div {
   transform: translatey(-2px);
 }
 
+.my-button:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: not-allowed;
+  border: none;
+  transform: none;
+}
+
 /* MyInput */
 
 .my-input {
