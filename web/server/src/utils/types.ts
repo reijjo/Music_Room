@@ -19,6 +19,8 @@ export interface DotenvConfig {
   TEST_POSTGRES_DB?: string;
   TEST_PGHOST?: string;
   TEST_PGPORT?: number;
+  EMAIL_USERNAME?: string;
+  EMAIL_PASSWORD?: string;
 }
 
 export interface UserFull {

@@ -192,3 +192,20 @@ ul {
   font-size: 0.8rem;
   color: var(--warn);
 }
+
+/* Verify */
+
+.grid-for-2 {
+  margin: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.grid-for-2 > div {
+  padding: 5px;
+}
+
+.grid-for-2 > div > div {
+  padding: 5px;
+}

@@ -21,8 +21,23 @@ const newUser = async (newUser: UserData) => {
     return res.data;
   } catch (error: unknown) {
     console.error("Error creating new users", error);
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
   }
 };
 
-const userService = { getUsers, newUser };
+// api/users/:code/verify
+
+const verifyUser = async (code: string) => {
+  console.log("AXios code", code);
+  try {
+    const res = await axios.get(`${baseUrl}/${code}/verify`);
+    return res.data;
+  } catch (error: unknown) {
+    console.error("Error verifying user", error);
+  }
+};
+
+const userService = { getUsers, newUser, verifyUser };
 export default userService;

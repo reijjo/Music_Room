@@ -13,6 +13,8 @@ const PGPORT: number = parseInt(process.env.PGPORT || "");
 const TEST_POSTGRES_DB = process.env.TEST_POSTGRES_DB;
 const TEST_PGHOST = process.env.TEST_PGHOST;
 const TEST_PGPORT: number = parseInt(process.env.TEST_PGPORT || "");
+const EMAIL_USERNAME = process.env.EMAIL_USERNAME;
+const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 
 export const config: DotenvConfig = {
   PORT,
@@ -24,4 +26,6 @@ export const config: DotenvConfig = {
   TEST_POSTGRES_DB,
   TEST_PGHOST,
   TEST_PGPORT,
+  EMAIL_USERNAME,
+  EMAIL_PASSWORD,
 };

@@ -13,6 +13,7 @@ import Step0 from "./register/Step0";
 import Step1 from "./register/Step1";
 import Step2 from "./register/Step2";
 import Step3 from "./register/Step3";
+import axios from "axios";
 
 // import MyButton from "../../components/MyButton";
 // import MyInput from "../../components/MyInput";
@@ -300,12 +301,28 @@ const Register = () => {
 
       try {
         const res = await userService.newUser(user);
-        console.log("New user response", res);
-        setInfoMsg({ message: res.message, style: res.style });
-        setTimeout(() => {
-          setInfoMsg({ message: null });
-        }, 5000);
-      } catch (error) {
+        if (res) {
+          console.log("New user response", res);
+          setInfoMsg({ message: res.message, style: res.style });
+          setTimeout(() => {
+            setInfoMsg({ message: null });
+          }, 5000);
+        } else {
+          // console.error("Server returned an undefined response.");
+          setInfoMsg({
+            message: "Error while creating user. Please try again",
+            style: "info-error",
+          });
+          setTimeout(() => {
+            setInfoMsg({ message: null });
+          }, 5000);
+        }
+      } catch (error: unknown) {
+        console.log("error", error);
+        if (axios.isAxiosError(error)) {
+          const response = error.response;
+          console.log("AXios errror respo", response);
+        }
         setInfoMsg({
           message: "Error while creating user. Please try again",
           style: "info-error",
@@ -327,7 +344,7 @@ const Register = () => {
     }
   };
 
-  console.log("INFO MSG", infoMsg);
+  // console.log("INFO MSG", infoMsg);
 
   return (
     <div className="register-page">
